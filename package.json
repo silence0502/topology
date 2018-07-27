@@ -1,0 +1,62 @@
+{
+  "name": "topology",
+  "version": "1.1.0-0",
+  "main": "./lib/topology.js",
+  "types": "./lib/topology.d.ts",
+  "repository": "http://git.klz-qcloud.cn/nfv/topology.git",
+  "author": "王喆 <zhe.wang6@hpe.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "rollup -c",
+    "watch": "rollup -cw",
+    "lint": "tslint --project tsconfig.json --type-check",
+    "release": "standard-version",
+    "dump": "npm run release  -- --prerelease"
+  },
+  "standard-version": {
+    "skip": {
+      "changelog": false,
+      "bump": false,
+      "tag": true,
+      "commit": false
+    }
+  },
+  "dependencies": {
+    "@types/backbone": "^1.3.42",
+    "@types/jquery": "^3.2.17",
+    "@types/lodash": "^4.14.91",
+    "@types/react": "^16.0.31",
+    "@types/react-dom": "^16.0.3",
+    "backbone": "^1.3.3",
+    "bufferutil": "^3.0.3",
+    "cssnano": "^3.10.0",
+    "dagre": "^0.7.4",
+    "graphlib": "^2.1.2",
+    "jquery": "^3.2.1",
+    "less": "^2.7.3",
+    "lodash": "^4.17.4",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "rgbcolor": "^1.0.1",
+    "rollup-plugin-postcss": "^1.2.1",
+    "stackblur": "^1.0.0",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "babel-runtime": "^6.26.0",
+    "rollup": "^0.53.3",
+    "rollup-plugin-commonjs": "^8.2.6",
+    "rollup-plugin-filesize": "^1.5.0",
+    "rollup-plugin-license": "^0.6.0",
+    "rollup-plugin-livereload": "^0.6.0",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-globals": "^1.1.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-replace": "^2.0.0",
+    "rollup-plugin-serve": "^0.4.2",
+    "rollup-plugin-typescript2": "^0.12.0",
+    "rollup-plugin-uglify": "^2.0.1",
+    "standard-version": "^4.3.0",
+    "typescript": "^2.6.2"
+  }
+}

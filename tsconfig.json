@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "outDir": "./lib/",
+    "module": "ES2015",
+    "declaration": true,
+    "target": "es5",
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "sourceMap": true,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "allowSyntheticDefaultImports": true,
+    "strictNullChecks": true,
+    "skipLibCheck": true,
+  },
+  "compileOnSave": true,
+  "include": [
+    "./src/**/*",
+    "./externals.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "lib",
+  ],
+  "types": [
+    "typePatches"
+  ]
+}

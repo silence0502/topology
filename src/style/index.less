@@ -1,0 +1,77 @@
+// @import (inline) './rappid.min.css';
+.Topology {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    .topology-app {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        .app-body {
+            position: relative;
+            height: 100%;
+            .btn {
+                z-index: 999;
+                width: 40px;
+                height: 40px;
+                position: absolute;
+                line-height: 1.5;
+                display: flex;
+                font-weight: 400;
+                align-items: center;
+                justify-content: center;
+                touch-action: manipulation;
+                cursor: pointer;
+                background-image: none;
+                border: 1px solid transparent;
+                white-space: nowrap;
+                font-size: 24px;
+                border-radius: 4px;
+                user-select: none;
+                color: #fff;
+                background-color: #00b388;
+                border-color: #00b388;
+            }
+            #btn-changeLayout-tb {
+                top: 10px;
+                left: 30px;
+            }
+            #btn-changeLayout-bt {
+                top: 10px;
+                left: 80px;
+            }
+            #btn-changeLayout-lr {
+                top: 10px;
+                left: 130px;
+            }
+            #btn-changeLayout-rl {
+                top: 10px;
+                left: 180px;
+            }
+            #btn-zoomin {
+                top: 10px;
+                right: 80px;
+            }
+            #btn-zoomout {
+                top: 10px;
+                right: 30px;
+            }
+            #navigator {
+                position: absolute;
+                top: 60px;
+                right: 30px;
+            }
+            .paper-container {
+                position: absolute;
+                top: 0;
+                height: 100%;
+                width: 100%;
+                overflow: hidden;
+                box-sizing: border-box;
+            }
+        }
+    }
+}

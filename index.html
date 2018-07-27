@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>topology</title>
+  <link rel="stylesheet" href="src/style/rappid.min.css">
+  <link rel="stylesheet" href="./lib/topology.css">
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="node_modules/lodash/lodash.min.js"></script>
+  <script src="node_modules/backbone/backbone-min.js"></script>
+  <!-- <script src="node_modules/react/umd/react.production.min.js"></script> -->
+  <!-- <script src="node_modules/react-dom/umd/react-dom.production.min.js"></script> -->
+  <script src="node_modules/react/umd/react.development.js"></script>
+  <script src="node_modules/react-dom/umd/react-dom.development.js"></script>
+  <script src="src/rappid/dagre.min.js"></script>
+  <script src="src/rappid/graphlib.min.js"></script>
+  <script src="src/rappid/rappid.min.js"></script>
+  <style>
+    html,
+    body,
+    #root {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script src="./lib/topology.js"></script>
+  <script>
+    topology.init('root', {
+      rankDir: 'TB',
+      animate: true,
+      width: '100%',
+      height: '100%',
+      data: {
+        "nodes": [
+          {
+            "id": "wk-1",
+            "name": "物理网卡1",
+            "label": "物理网卡1",
+            "type": "switches",
+            "desc": "",
+            "state": 0
+          },
+          {
+            "id": "wk-2",
+            "name": "物理网卡2",
+            "label": "物理网卡2",
+            "type": "switches",
+            "desc": "",
+            "state": 0
+          },
+          {
+            "id": "wo-1",
+            "name": "物理网口1",
+            "label": "物理网口1",
+            "type": "switches",
+            "desc": "",
+            "state": 0
+          },
+          {
+            "id": "wo-2",
+            "name": "物理网口2",
+            "label": "物理网口2",
+            "type": "switches",
+            "desc": "",
+            "state": 1
+          },
+          {
+            "id": "wo-3",
+            "name": "物理网口3",
+            "label": "物理网口3",
+            "type": "switches",
+            "desc": "",
+            "state": 0
+          },
+          {
+            "id": "ovs",
+            "name": "OVS",
+            "label": "OVS",
+            "type": "router",
+            "desc": "",
+            "state": 0
+          },
+          {
+            "id": "ovs-1",
+            "name": "OVS",
+            "label": "OVS",
+            "type": "router",
+            "desc": "",
+            "state": 0
+          },
+          {
+            "id": "vm-1",
+            "name": "VM1",
+            "label": "VM1",
+            "type": "firewall",
+            "desc": "",
+            "state": 0
+          },
+          {
+            "id": "vm-2",
+            "name": "VM2",
+            "label": "VM2",
+            "type": "firewall",
+            "desc": "",
+            "state": 2
+          },
+          {
+            "id": "vm-3",
+            "name": "VM3",
+            "label": "VM3",
+            "type": "server",
+            "desc": "",
+            "state": 1
+          },
+          {
+            "id": "vm-4",
+            "name": "VM4",
+            "label": "VM4",
+            "type": "server",
+            "desc": "",
+            "state": 1
+          }
+        ],
+        "links": [
+
+          {
+            "source": "wk-1",
+            "state": 0,
+            "target": "wo-1"
+          },
+
+          {
+            "source": "wk-1",
+            "state": 0,
+            "target": "wo-3"
+          },
+
+          {
+            "source": "wk-2",
+            "state": 0,
+            "target": "wo-2"
+          },
+          {
+            "source": "wo-1",
+            "state": 4,
+            "target": "ovs"
+          },
+          {
+            "source": "wo-2",
+            "state": 1,
+            "target": "ovs-1"
+          },
+          {
+            "source": "wo-3",
+            "state": 0,
+            "target": "ovs"
+          },
+          {
+            "source": "wo-3",
+            "state": 0,
+            "target": "ovs"
+          },
+          {
+            "source": "ovs",
+            "state": 0,
+            "target": "vm-1"
+          },
+          {
+            "source": "ovs-1",
+            "state": 0,
+            "target": "vm-1"
+          },
+          {
+            "source": "ovs",
+            "state": 2,
+            "target": "vm-2"
+          },
+          {
+            "source": "ovs-1",
+            "state": 3,
+            "target": "vm-2"
+          },
+          {
+            "source": "ovs",
+            "state": 0,
+            "target": "vm-3"
+          },
+          {
+            "source": "ovs-1",
+            "state": 1,
+            "target": "vm-3"
+          },
+          {
+            "source": "ovs",
+            "state": 0,
+            "target": "vm-4"
+          },
+          {
+            "source": "ovs-1",
+            "state": 1,
+            "target": "vm-4"
+          }
+        ]
+      },
+      cid: '',
+      onDblclick: function (cell) {
+        console.log(cell);
+      },
+      images: {
+        switches: "'./src/img/switches.png'",
+        router: "'./src/img/router.png'",
+        firewall: "'./src/img/firewall.png'",
+        server: "'./src/img/server.png'"
+      }
+    })
+  </script>
+</body>
+
+</html>
