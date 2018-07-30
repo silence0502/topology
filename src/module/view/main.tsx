@@ -32,6 +32,7 @@ export default class Main extends React.Component<MainProps, any> {
   btn_zoomin: HTMLDivElement
   btn_zoomout: HTMLDivElement
   navigator: HTMLDivElement
+  contextmenu: HTMLDivElement
 
   // rappid things
   graph: joint.dia.Graph;
@@ -176,9 +177,20 @@ export default class Main extends React.Component<MainProps, any> {
       }
     });
     paper.on('cell:contextmenu', (cellView: any) => {
-      if (this.props.onDblclick) {
-        this.props.onDblclick(cellView)
-      }
+      // if (this.props.onDblclick) {
+      //   this.props.onDblclick(cellView)
+      // }
+      this.setState({
+        visable: true
+      })
+    });
+    paper.on('blank:pointerdown', (cellView: any) => {
+      // if (this.props.onDblclick) {
+      //   this.props.onDblclick(cellView)
+      // }
+      this.setState({
+        visable: false
+      })
     });
     this.btn_changeLayout_tb.onclick = this.changeLayout_tb.bind(this)
     this.btn_changeLayout_bt.onclick = this.changeLayout_bt.bind(this)
@@ -243,11 +255,35 @@ export default class Main extends React.Component<MainProps, any> {
   zoomOut() {
     this.paperScroller.zoom(-0.2, { min: 0.2 });
   }
-
+  renderContextmenu() {
+    let _style = {
+      width: '60px',
+      height: '100%',
+      border: '1px solid #000',
+      listStyleType: 'none'
+    }
+    if (this.state.visable === true) {
+      return (
+        <ul style={_style}>
+          <li><a href="">menu1</a></li>
+          <li><a href="">menu2</a></li>
+          <li><a href="">menu3</a></li>
+          <li><a href="">menu4</a></li>
+          <li><a href="">menu5</a></li>
+          <li><a href="">menu6</a></li>
+        </ul>
+      )
+    } else {
+      return (
+        <div />
+      )
+    }
+  }
   constructor(props: MainProps) {
     super(props);
     this.state = {
-      rankDir: 'TB'
+      rankDir: 'TB',
+      visable: false
     }
   }
 
@@ -270,6 +306,13 @@ export default class Main extends React.Component<MainProps, any> {
             <div className="paper-container" ref={(node: HTMLDivElement) => { this.paperContainer = node }} >
             </div>
             <div className="navigator" id="navigator" ref={(node: HTMLDivElement) => { this.navigator = node }} >
+            </div>
+            <div className="contextmenu" id="contextmenu" style={{
+              position: 'absolute',
+              top: '60px',
+              left: '30px'
+            }} ref={(node: HTMLDivElement) => { this.contextmenu = node }} >
+              {this.renderContextmenu()}
             </div>
           </div>
         </div>

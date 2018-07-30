@@ -23,6 +23,7 @@ export default class Main extends React.Component<MainProps, any> {
     btn_zoomin: HTMLDivElement;
     btn_zoomout: HTMLDivElement;
     navigator: HTMLDivElement;
+    contextmenu: HTMLDivElement;
     graph: joint.dia.Graph;
     commandManager: joint.dia.CommandManager;
     paper: joint.dia.Paper;
@@ -47,6 +48,7 @@ export default class Main extends React.Component<MainProps, any> {
     changeLayout_rl(): void;
     zoomIn(): void;
     zoomOut(): void;
+    renderContextmenu(): JSX.Element;
     constructor(props: MainProps);
     componentDidMount(): void;
     render(): JSX.Element;
