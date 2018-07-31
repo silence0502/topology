@@ -1,0 +1,169 @@
+{
+    "nodes": [
+        {
+            "id": "wk-1",
+            "name": "物理网卡1",
+            "label": "物理网卡1",
+            "type": "switches",
+            "desc": "",
+            "state": 0
+        },
+        {
+            "id": "wk-2",
+            "name": "物理网卡2",
+            "label": "物理网卡2",
+            "type": "switches",
+            "desc": "",
+            "state": 0
+        },
+        {
+            "id": "wo-1",
+            "name": "物理网口1",
+            "label": "物理网口1",
+            "type": "switches",
+            "desc": "",
+            "state": 0
+        },
+        {
+            "id": "wo-2",
+            "name": "物理网口2",
+            "label": "物理网口2",
+            "type": "switches",
+            "desc": "",
+            "state": 0
+        },
+        {
+            "id": "wo-3",
+            "name": "物理网口3",
+            "label": "物理网口3",
+            "type": "switches",
+            "desc": "",
+            "state": 0
+        },
+        {
+            "id": "ovs",
+            "name": "OVS",
+            "label": "OVS",
+            "type": "router",
+            "desc": "",
+            "state": 0
+        },
+        {
+            "id": "ovs-1",
+            "name": "OVS",
+            "label": "OVS",
+            "type": "router",
+            "desc": "",
+            "state": 0
+        },
+        {
+            "id": "vm-1",
+            "name": "VM1",
+            "label": "VM1",
+            "type": "firewall",
+            "desc": "",
+            "state": 0
+        },
+        {
+            "id": "vm-2",
+            "name": "VM2",
+            "label": "VM2",
+            "type": "firewall",
+            "desc": "",
+            "state": 0
+        },
+        {
+            "id": "vm-3",
+            "name": "VM3",
+            "label": "VM3",
+            "type": "server",
+            "desc": "",
+            "state": 0
+        },
+        {
+            "id": "vm-4",
+            "name": "VM4",
+            "label": "VM4",
+            "type": "server",
+            "desc": "",
+            "state": 0
+        }
+    ],
+    "links": [
+        {
+            "source": "wk-1",
+            "state": 0,
+            "target": "wo-1"
+        },
+        {
+            "source": "wk-1",
+            "state": 0,
+            "target": "wo-3"
+        },
+        {
+            "source": "wk-2",
+            "state": 0,
+            "target": "wo-2"
+        },
+        {
+            "source": "wo-1",
+            "state": 4,
+            "target": "ovs"
+        },
+        {
+            "source": "wo-2",
+            "state": 1,
+            "target": "ovs-1"
+        },
+        {
+            "source": "wo-3",
+            "state": 0,
+            "target": "ovs"
+        },
+        {
+            "source": "wo-3",
+            "state": 0,
+            "target": "ovs"
+        },
+        {
+            "source": "ovs",
+            "state": 0,
+            "target": "vm-1"
+        },
+        {
+            "source": "ovs-1",
+            "state": 0,
+            "target": "vm-1"
+        },
+        {
+            "source": "ovs",
+            "state": 2,
+            "target": "vm-2"
+        },
+        {
+            "source": "ovs-1",
+            "state": 3,
+            "target": "vm-2"
+        },
+        {
+            "source": "ovs",
+            "state": 0,
+            "target": "vm-3"
+        },
+        {
+            "source": "ovs-1",
+            "state": 1,
+            "target": "vm-3"
+        },
+        {
+            "source": "ovs",
+            "state": 0,
+            "target": "vm-4"
+        },
+        {
+            "source": "ovs-1",
+            "state": 1,
+            "target": "vm-4"
+        }
+    ]
+}

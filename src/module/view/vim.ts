@@ -171,14 +171,17 @@ let vimOption = (opt: IvimOption) => {
         if (opt.label) {
             dataTooltip = `data-tooltip="${opt.label}"`
             switch (opt.type) {
-                case 'switches':
-                    dataIcon = `xlink:href=${opt.switches}`
+                case 'switch':
+                    dataIcon = `xlink:href=${opt.switch}`
                     break;
-                case 'router':
-                    dataIcon = `xlink:href=${opt.router}`
+                case 'host':
+                    dataIcon = `xlink:href=${opt.host}`
                     break;
-                case 'firewall':
-                    dataIcon = `xlink:href=${opt.firewall}`
+                case 'vnf':
+                    dataIcon = `xlink:href=${opt.vnf}`
+                    break;
+                case 'vnfc':
+                    dataIcon = `xlink:href=${opt.vnfc}`
                     break;
                 case 'server':
                     dataIcon = `xlink:href=${opt.server}`
@@ -192,69 +195,6 @@ let vimOption = (opt: IvimOption) => {
         if (opt.type) {
             option.attrs['.label'].text = opt.type
         }
-
-        // switch (opt.state) {
-        //     case 0:
-        //         option.attrs['.alarm'].width = 0
-        //         option.attrs['.alarm'].height = 0
-        //         break;
-        //     case 1:
-        //         option.attrs['.alarm'].fill = '#D10002'
-        //         break;
-        //     case 2:
-        //         option.attrs['.alarm'].fill = '#FF9901'
-        //         break;
-        //     case 3:
-        //         option.attrs['.alarm'].fill = '#DFB202'
-        //         break;
-        //     case 4:
-        //         option.attrs['.alarm'].fill = '#00BFFF'
-        //         break;
-        //     default:
-        //         option.attrs['.alarm'].width = 0
-        //         option.attrs['.alarm'].height = 0
-        //         break;
-        // }
-        // switch (opt.type) {
-        //     case 'pnc':
-        //         option.size = {
-        //             width: 140,
-        //             height: 60
-        //         }
-        //         break;
-        //     case 'pno':
-        //         option.size = {
-        //             width: 80,
-        //             height: 40
-        //         }
-        //         break;
-        //     case 'ovs':
-        //         option.size = {
-        //             width: 320,
-        //             height: 60
-        //         }
-        //         break;
-        //     case 'vnc':
-        //         option.size = {
-        //             width: 20,
-        //             height: 20
-        //         }
-        //         break;
-        //     case 'vm':
-        //         option.size = {
-        //             width: 140,
-        //             height: 60
-        //         }
-        //         break;
-        //     case 'HA':
-        //         option.size = {
-        //             width: 140,
-        //             height: 60
-        //         }
-        //         break;
-        //     default:
-        //         break;
-        // }
     }
     return option
 }
