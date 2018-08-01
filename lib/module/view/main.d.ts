@@ -20,6 +20,10 @@ export default class Main extends React.Component<MainProps, any> {
     btn_changeLayout_bt: HTMLDivElement;
     btn_changeLayout_lr: HTMLDivElement;
     btn_changeLayout_rl: HTMLDivElement;
+    btn_function_1: HTMLDivElement;
+    btn_function_2: HTMLDivElement;
+    btn_function_3: HTMLDivElement;
+    btn_function_4: HTMLDivElement;
     btn_zoomin: HTMLDivElement;
     btn_zoomout: HTMLDivElement;
     navigator: HTMLDivElement;
@@ -40,6 +44,10 @@ export default class Main extends React.Component<MainProps, any> {
     parseData(data: any, images: any): void;
     initializePaper(): void;
     initializeNavigator(): void;
+    function_1(): void;
+    function_2(): void;
+    function_3(): void;
+    function_4(): void;
     renderLayout(): void;
     changeLayout_tb(): void;
     changeLayout_bt(): void;

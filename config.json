@@ -1,58 +1,58 @@
 {
     "nodes": [
         {
-            "id": "wk-1",
-            "name": "物理网卡1",
-            "label": "物理网卡1",
-            "type": "switches",
+            "id": "vnf-1",
+            "name": "vnf1",
+            "label": "vnf1",
+            "type": "vnf",
             "desc": "",
             "state": 0
         },
         {
-            "id": "wk-2",
-            "name": "物理网卡2",
-            "label": "物理网卡2",
-            "type": "switches",
+            "id": "vnf-2",
+            "name": "vnf2",
+            "label": "vnf2",
+            "type": "vnf",
             "desc": "",
             "state": 0
         },
         {
-            "id": "wo-1",
-            "name": "物理网口1",
-            "label": "物理网口1",
-            "type": "switches",
+            "id": "vnfc-1",
+            "name": "vnfc1",
+            "label": "vnfc1",
+            "type": "vnfc",
             "desc": "",
             "state": 0
         },
         {
-            "id": "wo-2",
-            "name": "物理网口2",
-            "label": "物理网口2",
-            "type": "switches",
+            "id": "vnfc-2",
+            "name": "vnfc2",
+            "label": "vnfc2",
+            "type": "vnfc",
             "desc": "",
             "state": 0
         },
         {
-            "id": "wo-3",
-            "name": "物理网口3",
-            "label": "物理网口3",
-            "type": "switches",
+            "id": "vnfc-3",
+            "name": "vnfc3",
+            "label": "vnfc3",
+            "type": "vnfc",
             "desc": "",
             "state": 0
         },
         {
-            "id": "ovs",
-            "name": "OVS",
-            "label": "OVS",
-            "type": "router",
+            "id": "vnfc-4",
+            "name": "vnfc4",
+            "label": "vnfc4",
+            "type": "vnfc",
             "desc": "",
             "state": 0
         },
         {
-            "id": "ovs-1",
-            "name": "OVS",
-            "label": "OVS",
-            "type": "router",
+            "id": "vnfc-5",
+            "name": "vnfc5",
+            "label": "vnfc5",
+            "type": "vnfc",
             "desc": "",
             "state": 0
         },
@@ -60,7 +60,7 @@
             "id": "vm-1",
             "name": "VM1",
             "label": "VM1",
-            "type": "firewall",
+            "type": "vm",
             "desc": "",
             "state": 0
         },
@@ -68,7 +68,7 @@
             "id": "vm-2",
             "name": "VM2",
             "label": "VM2",
-            "type": "firewall",
+            "type": "vm",
             "desc": "",
             "state": 0
         },
@@ -76,7 +76,7 @@
             "id": "vm-3",
             "name": "VM3",
             "label": "VM3",
-            "type": "server",
+            "type": "vm",
             "desc": "",
             "state": 0
         },
@@ -84,86 +84,354 @@
             "id": "vm-4",
             "name": "VM4",
             "label": "VM4",
+            "type": "vm",
+            "desc": "",
+            "state": 0
+        },
+        {
+            "id": "vm-5",
+            "name": "VM5",
+            "label": "VM5",
+            "type": "vm",
+            "desc": "",
+            "state": 0
+        },
+        {
+            "id": "vm-6",
+            "name": "VM6",
+            "label": "VM6",
+            "type": "vm",
+            "desc": "",
+            "state": 0
+        },
+        {
+            "id": "vm-7",
+            "name": "VM7",
+            "label": "VM7",
+            "type": "vm",
+            "desc": "",
+            "state": 0
+        },
+        {
+            "id": "vm-8",
+            "name": "VM8",
+            "label": "VM8",
+            "type": "vm",
+            "desc": "",
+            "state": 0
+        },
+        {
+            "id": "server-1",
+            "name": "server1",
+            "label": "server1",
             "type": "server",
+            "desc": "",
+            "state": 0
+        },
+        {
+            "id": "server-2",
+            "name": "server2",
+            "label": "server2",
+            "type": "server",
+            "desc": "",
+            "state": 0
+        },
+        {
+            "id": "server-3",
+            "name": "server3",
+            "label": "server3",
+            "type": "server",
+            "desc": "",
+            "state": 0
+        },
+        {
+            "id": "switch-1",
+            "name": "switch1",
+            "label": "switch1",
+            "type": "switch",
+            "desc": "",
+            "state": 0
+        },
+        {
+            "id": "switch-2",
+            "name": "switch2",
+            "label": "switch2",
+            "type": "switch",
+            "desc": "",
+            "state": 0
+        },
+        {
+            "id": "switch-3",
+            "name": "switch3",
+            "label": "switch3",
+            "type": "switch",
+            "desc": "",
+            "state": 0
+        },
+        {
+            "id": "switch-4",
+            "name": "switch4",
+            "label": "switch4",
+            "type": "switch",
+            "desc": "",
+            "state": 0
+        },
+        {
+            "id": "switch-5",
+            "name": "switch5",
+            "label": "switch5",
+            "type": "switch",
+            "desc": "",
+            "state": 0
+        },
+        {
+            "id": "switch-6",
+            "name": "switch6",
+            "label": "switch6",
+            "type": "switch",
+            "desc": "",
+            "state": 0
+        },
+        {
+            "id": "switch-7",
+            "name": "switch7",
+            "label": "switch7",
+            "type": "switch",
             "desc": "",
             "state": 0
         }
     ],
     "links": [
         {
-            "source": "wk-1",
+            "source": "vnf-1",
             "state": 0,
-            "target": "wo-1"
+            "type": 0,
+            "target": "vnfc-1"
         },
         {
-            "source": "wk-1",
+            "source": "vnf-1",
             "state": 0,
-            "target": "wo-3"
+            "type": 0,
+            "target": "vnfc-3"
         },
         {
-            "source": "wk-2",
+            "source": "vnf-1",
             "state": 0,
-            "target": "wo-2"
+            "type": 0,
+            "target": "vnfc-4"
         },
         {
-            "source": "wo-1",
+            "source": "vnf-2",
+            "state": 0,
+            "type": 0,
+            "target": "vnfc-2"
+        },
+        {
+            "source": "vnf-2",
+            "state": 0,
+            "type": 0,
+            "target": "vnfc-5"
+        },
+        {
+            "source": "vnfc-1",
             "state": 4,
-            "target": "ovs"
+            "target": "vm-2"
         },
         {
-            "source": "wo-2",
+            "source": "vnfc-1",
             "state": 1,
-            "target": "ovs-1"
+            "type": 0,
+            "target": "vm-3"
         },
         {
-            "source": "wo-3",
+            "source": "vnfc-1",
             "state": 0,
-            "target": "ovs"
+            "type": 0,
+            "target": "vm-7"
         },
         {
-            "source": "wo-3",
-            "state": 0,
-            "target": "ovs"
-        },
-        {
-            "source": "ovs",
-            "state": 0,
+            "source": "vnfc-2",
+            "state": 4,
             "target": "vm-1"
         },
         {
-            "source": "ovs-1",
+            "source": "vnfc-2",
+            "state": 1,
+            "type": 0,
+            "target": "vm-2"
+        },
+        {
+            "source": "vnfc-2",
             "state": 0,
+            "type": 0,
+            "target": "vm-5"
+        },
+        {
+            "source": "vnfc-3",
+            "state": 4,
             "target": "vm-1"
         },
         {
-            "source": "ovs",
+            "source": "vnfc-3",
+            "state": 1,
+            "type": 0,
+            "target": "vm-4"
+        },
+        {
+            "source": "vnfc-4",
+            "state": 0,
+            "type": 0,
+            "target": "vm-5"
+        },
+        {
+            "source": "vnfc-4",
+            "state": 0,
+            "type": 0,
+            "target": "vm-6"
+        },
+        {
+            "source": "vnfc-4",
+            "state": 0,
+            "type": 0,
+            "target": "vm-1"
+        },
+        {
+            "source": "vnfc-4",
+            "state": 0,
+            "type": 0,
+            "target": "vm-7"
+        },
+        {
+            "source": "vnfc-5",
+            "state": 0,
+            "type": 0,
+            "target": "vm-4"
+        },
+        {
+            "source": "vnfc-5",
+            "state": 0,
+            "type": 0,
+            "target": "vm-5"
+        },
+        {
+            "source": "vnfc-5",
+            "state": 0,
+            "type": 0,
+            "target": "vm-6"
+        },
+        {
+            "source": "vm-1",
+            "state": 0,
+            "type": 0,
+            "target": "server-2"
+        },
+        {
+            "source": "vm-1",
+            "state": 0,
+            "type": 0,
+            "target": "server-3"
+        },
+        {
+            "source": "vm-2",
+            "state": 0,
+            "type": 0,
+            "target": "server-1"
+        },
+        {
+            "source": "vm-3",
+            "state": 0,
+            "type": 0,
+            "target": "server-1"
+        },
+        {
+            "source": "vm-4",
+            "state": 0,
+            "type": 0,
+            "target": "server-3"
+        },
+        {
+            "source": "vm-5",
+            "state": 0,
+            "type": 0,
+            "target": "server-1"
+        },
+        {
+            "source": "vm-5",
+            "state": 0,
+            "type": 0,
+            "target": "server-2"
+        },
+        {
+            "source": "vm-6",
+            "state": 0,
+            "type": 0,
+            "target": "server-2"
+        },
+        {
+            "source": "vm-7",
+            "state": 0,
+            "type": 0,
+            "target": "server-2"
+        },
+        {
+            "source": "vm-8",
             "state": 2,
-            "target": "vm-2"
+            "type": 3,
+            "target": "switch-7"
         },
         {
-            "source": "ovs-1",
-            "state": 3,
-            "target": "vm-2"
-        },
-        {
-            "source": "ovs",
+            "source": "vm-8",
             "state": 0,
-            "target": "vm-3"
+            "type": 0,
+            "target": "server-2"
         },
         {
-            "source": "ovs-1",
-            "state": 1,
-            "target": "vm-3"
-        },
-        {
-            "source": "ovs",
+            "source": "server-1",
             "state": 0,
-            "target": "vm-4"
+            "type": 0,
+            "target": "switch-2"
         },
         {
-            "source": "ovs-1",
-            "state": 1,
-            "target": "vm-4"
+            "source": "server-1",
+            "state": 0,
+            "type": 0,
+            "target": "switch-3"
+        },
+        {
+            "source": "server-1",
+            "state": 0,
+            "type": 0,
+            "target": "switch-6"
+        },
+        {
+            "source": "server-2",
+            "state": 0,
+            "type": 0,
+            "target": "switch-1"
+        },
+        {
+            "source": "server-2",
+            "state": 0,
+            "type": 0,
+            "target": "switch-4"
+        },
+        {
+            "source": "server-2",
+            "state": 0,
+            "type": 0,
+            "target": "switch-7"
+        },
+        {
+            "source": "server-3",
+            "state": 0,
+            "type": 0,
+            "target": "switch-5"
+        },
+        {
+            "source": "server-3",
+            "state": 0,
+            "type": 0,
+            "target": "switch-6"
         }
     ]
 }

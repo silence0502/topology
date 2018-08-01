@@ -29,6 +29,10 @@ export default class Main extends React.Component<MainProps, any> {
   btn_changeLayout_bt: HTMLDivElement
   btn_changeLayout_lr: HTMLDivElement
   btn_changeLayout_rl: HTMLDivElement
+  btn_function_1: HTMLDivElement
+  btn_function_2: HTMLDivElement
+  btn_function_3: HTMLDivElement
+  btn_function_4: HTMLDivElement
   btn_zoomin: HTMLDivElement
   btn_zoomout: HTMLDivElement
   navigator: HTMLDivElement
@@ -175,28 +179,53 @@ export default class Main extends React.Component<MainProps, any> {
         })
       }
     });
-    paper.on('cell:contextmenu', (cellView: any, w: any) => {
-      // console.log(w, '==========================>w');
-      // if (this.props.onDblclick) {
-      //   this.props.onDblclick(cellView)
-      // }
-      if (cellView.model instanceof joint.dia.Link) return;
 
-      var halo = new joint.ui.Halo({
-        cellView: cellView,
-        type: 'pie'
-      });
-      halo.render();
+    /*
+     * 双击事件
+     */
+    paper.on('cell:pointerdblclick', (cellView: any) => {
+      if (this.props.onDblclick) {
+        this.props.onDblclick(cellView)
+      }
     });
 
+    /*
+     * 右击事件
+     */
+    paper.on('cell:contextmenu', (cellView: any) => {
+      this.setState({
+        disabled: true
+      })
+    });
+    paper.on('blank:pointerclick', (cellView: any) => {
+      this.setState({
+        disabled: false
+      })
+    });
+    paper.on('blank:contextmenu', (cellView: any) => {
+      this.setState({
+        disabled: false
+      })
+    });
+
+    /*
+     * 按钮
+     */
     this.btn_changeLayout_tb.onclick = this.changeLayout_tb.bind(this)
     this.btn_changeLayout_bt.onclick = this.changeLayout_bt.bind(this)
     this.btn_changeLayout_lr.onclick = this.changeLayout_lr.bind(this)
     this.btn_changeLayout_rl.onclick = this.changeLayout_rl.bind(this)
+    this.btn_function_1.onclick = this.function_1.bind(this)
+    this.btn_function_2.onclick = this.function_2.bind(this)
+    this.btn_function_3.onclick = this.function_3.bind(this)
+    this.btn_function_4.onclick = this.function_4.bind(this)
     this.btn_zoomin.onclick = this.zoomIn.bind(this)
     this.btn_zoomout.onclick = this.zoomOut.bind(this)
   }
 
+  /*
+   * 缩略图
+   */
   initializeNavigator() {
     var navigator = this.navigator = new joint.ui.Navigator({
       width: 240,
@@ -208,12 +237,39 @@ export default class Main extends React.Component<MainProps, any> {
     navigator.render();
   }
 
+  /*
+   * 按钮功能
+   */
+  function_1() {
+    if (this.state.disabled == true) {
+      console.log('-------------------------------------------------->function_1');
+    }
+  }
+  function_2() {
+    if (this.state.disabled == true) {
+      console.log('-------------------------------------------------->function_2');
+    }
+  }
+  function_3() {
+    if (this.state.disabled == true) {
+      console.log('-------------------------------------------------->function_3');
+    }
+  }
+  function_4() {
+    if (this.state.disabled == true) {
+      console.log('-------------------------------------------------->function_4');
+    }
+  }
+
+  /*
+   * 布局切换
+   */
   renderLayout() {
     let graphBBox = joint.layout.DirectedGraph.layout(this.graph, {
       nodeSep: 50,
       edgeSep: 80,
       marginX: 100,
-      marginY: 20,
+      marginY: 100,
       rankSep: 100,
       rankDir: this.state.rankDir,
     });
@@ -246,6 +302,10 @@ export default class Main extends React.Component<MainProps, any> {
       this.renderLayout()
     })
   }
+
+  /*
+   * 放大缩小
+   */
   zoomIn() {
     this.paperScroller.zoom(0.2, { max: 2 });
   }
@@ -257,6 +317,7 @@ export default class Main extends React.Component<MainProps, any> {
     super(props);
     this.state = {
       rankDir: 'TB',
+      disabled: false
     }
   }
 
@@ -266,6 +327,15 @@ export default class Main extends React.Component<MainProps, any> {
   }
 
   render() {
+    let _style = {}
+    if (this.state.disabled === false) {
+      _style = {
+        color: 'rgba(0,0,0,.25)',
+        backgroundColor: '#f5f5f5',
+        borderColor: '#d9d9d9',
+        cursor: 'not-allowed'
+      }
+    }
     return (
       <div className="Topology" style={{ width: this.props.width, height: this.props.height }}  >
         <div className="topology-app">
@@ -274,6 +344,10 @@ export default class Main extends React.Component<MainProps, any> {
             <div ref={(node: HTMLDivElement) => { this.btn_changeLayout_bt = node }} id="btn-changeLayout-bt" className="btn">↑</div>
             <div ref={(node: HTMLDivElement) => { this.btn_changeLayout_lr = node }} id="btn-changeLayout-lr" className="btn">→</div>
             <div ref={(node: HTMLDivElement) => { this.btn_changeLayout_rl = node }} id="btn-changeLayout-rl" className="btn">←</div>
+            <div ref={(node: HTMLDivElement) => { this.btn_function_1 = node }} style={_style} id="btn-function-1" className="btn">功能1</div>
+            <div ref={(node: HTMLDivElement) => { this.btn_function_2 = node }} style={_style} id="btn-function-2" className="btn">功能2</div>
+            <div ref={(node: HTMLDivElement) => { this.btn_function_3 = node }} style={_style} id="btn-function-3" className="btn">功能3</div>
+            <div ref={(node: HTMLDivElement) => { this.btn_function_4 = node }} style={_style} id="btn-function-4" className="btn">功能4</div>
             <div ref={(node: HTMLDivElement) => { this.btn_zoomin = node }} id="btn-zoomin" className="btn">+</div>
             <div ref={(node: HTMLDivElement) => { this.btn_zoomout = node }} id="btn-zoomout" className="btn">-</div>
             <div className="paper-container" ref={(node: HTMLDivElement) => { this.paperContainer = node }} >

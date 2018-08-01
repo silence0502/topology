@@ -68,10 +68,15 @@ let Link = joint.dia.Link.extend({
         joint.dia.Link.prototype.initialize.apply(this, arguments);
     }
 });
+
+/*
+**连接线与箭头样式
+*/
 export interface IlinkOption {
     state?: number
     source?: string
     target?: string
+    type?: number
 }
 let linkOption = (opt: IlinkOption) => {
     let option: any = {
@@ -100,35 +105,30 @@ let linkOption = (opt: IlinkOption) => {
                 option.attrs['.connection'].stroke = '#C6C9CA';
                 option.attrs['.marker-target'].fill = '#C6C9CA';
                 option.attrs['.marker-target'].stroke = '#C6C9CA';
-                option.attrs['.marker-target'].d = 'M 10 0 L 0 5 L 10 10 z';
                 break;
             case 1:
                 option.attrs['.connection'].stroke = '#D10002';
                 option.attrs['.marker-target'].fill = '#fff';
                 option.attrs['.connection']['stroke-dasharray'] = '5 2';
                 option.attrs['.marker-target'].stroke = '#D10002';
-                option.attrs['.marker-target'].d = 'M 10 0 L 0 5 L 10 10 L 20 5 z';
                 break;
             case 2:
                 option.attrs['.connection'].stroke = '#FF9901'
                 option.attrs['.connection']['stroke-dasharray'] = '5 2';
-                option.attrs['.marker-target'].fill = '';
-                option.attrs['.marker-target'].stroke = '';
-                option.attrs['.marker-target'].d = '';
+                option.attrs['.marker-target'].fill = '#FF9901';
+                option.attrs['.marker-target'].stroke = '#FF9901';
                 break;
             case 3:
                 option.attrs['.connection'].stroke = '#DFB202'
                 option.attrs['.connection']['stroke-dasharray'] = '5 2';
                 option.attrs['.marker-target'].fill = '#DFB202';
                 option.attrs['.marker-target'].stroke = '#DFB202';
-                option.attrs['.marker-target'].d = 'M 10 0 L 0 5 L 10 10 L 0 5 z';
                 break;
             case 4:
                 option.attrs['.connection'].stroke = '#00BFFF'
                 option.attrs['.connection']['stroke-dasharray'] = '5 2';
                 option.attrs['.marker-target'].fill = '#00BFFF';
                 option.attrs['.marker-target'].stroke = '#00BFFF';
-                option.attrs['.marker-target'].d = 'M 10 0 L 0 5 L 10 10 L 20 5 z';
                 break;
             default:
                 option.attrs['.connection'].stroke = '#31d0c6'
@@ -137,10 +137,34 @@ let linkOption = (opt: IlinkOption) => {
                 option.attrs['.marker-target'].stroke = '#31d0c6'
                 break;
         }
+        switch (opt.type) {
+            case 0:
+                option.attrs['.marker-target'].d = 'M 10 0 L 0 5 L 10 10 z';  //三角箭头
+                break;
+            case 1:
+                option.attrs['.marker-target'].d = 'M 10 0 L 0 5 L 10 10 L 20 5 z'; //实心菱形
+                break;
+            case 2:
+                option.attrs['.marker-target'].d = 'M 10 0 L 0 5 L 10 10 L 20 5 z'; //空心菱形
+                option.attrs['.marker-target'].fill = '#fff';
+                break;
+            case 3:
+                option.attrs['.marker-target'].d = 'M 10 0 L 0 5 L 10 10 L 0 5 z'; //尖箭头
+                break;
+            case 4:
+                option.attrs['.marker-target'].d = ''; //没有箭头
+                break;
+            default:
+                option.attrs['.marker-target'].d = 'M 10 0 L 0 5 L 10 10 z';
+                break;
+        }
     }
     return option
 }
 
+/*
+**原件样式
+*/
 export interface IvimOption {
     id?: string
     desc?: string
@@ -149,9 +173,10 @@ export interface IvimOption {
     type?: string
     bizFields?: any
     isHighlight?: boolean
-    switches?: any
-    router?: any
-    firewall?: any
+    switch?: any
+    vm?: any
+    vnf?: any
+    vnfc?: any
     server?: any
 }
 let vimOption = (opt: IvimOption) => {
@@ -174,8 +199,8 @@ let vimOption = (opt: IvimOption) => {
                 case 'switch':
                     dataIcon = `xlink:href=${opt.switch}`
                     break;
-                case 'host':
-                    dataIcon = `xlink:href=${opt.host}`
+                case 'vm':
+                    dataIcon = `xlink:href=${opt.vm}`
                     break;
                 case 'vnf':
                     dataIcon = `xlink:href=${opt.vnf}`
@@ -187,7 +212,7 @@ let vimOption = (opt: IvimOption) => {
                     dataIcon = `xlink:href=${opt.server}`
                     break;
                 default:
-                    dataIcon = `xlink:href=${opt.switches}`
+                    dataIcon = `xlink:href=${opt.switch}`
                     break;
             }
             option.markup = `<g class="rotatable" ${dataTooltip}><image ${dataIcon} x="0" y="0" height="100px" width="100px"/> </g>`
