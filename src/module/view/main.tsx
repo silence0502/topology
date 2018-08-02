@@ -328,6 +328,8 @@ export default class Main extends React.Component<MainProps, any> {
 
   render() {
     let _style = {}
+    let tooltip1 = '', tooltip2 = '', tooltip3 = '', tooltip4 = ''
+    let tooltip_style = {}
     if (this.state.disabled === false) {
       _style = {
         color: 'rgba(0,0,0,.25)',
@@ -335,6 +337,14 @@ export default class Main extends React.Component<MainProps, any> {
         borderColor: '#d9d9d9',
         cursor: 'not-allowed'
       }
+      tooltip1 = tooltip2 = tooltip3 = tooltip4 = '请选中元件'
+      tooltip_style = { cursor: 'not-allowed' }
+    } else {
+      tooltip1 = '功能1'
+      tooltip2 = '功能2'
+      tooltip3 = '功能3'
+      tooltip4 = '功能4'
+      tooltip_style = { cursor: 'pointer' }
     }
     return (
       <div className="Topology" style={{ width: this.props.width, height: this.props.height }}  >
@@ -344,10 +354,28 @@ export default class Main extends React.Component<MainProps, any> {
             <div ref={(node: HTMLDivElement) => { this.btn_changeLayout_bt = node }} id="btn-changeLayout-bt" className="btn">↑</div>
             <div ref={(node: HTMLDivElement) => { this.btn_changeLayout_lr = node }} id="btn-changeLayout-lr" className="btn">→</div>
             <div ref={(node: HTMLDivElement) => { this.btn_changeLayout_rl = node }} id="btn-changeLayout-rl" className="btn">←</div>
-            <div ref={(node: HTMLDivElement) => { this.btn_function_1 = node }} style={_style} id="btn-function-1" className="btn">功能1</div>
-            <div ref={(node: HTMLDivElement) => { this.btn_function_2 = node }} style={_style} id="btn-function-2" className="btn">功能2</div>
-            <div ref={(node: HTMLDivElement) => { this.btn_function_3 = node }} style={_style} id="btn-function-3" className="btn">功能3</div>
-            <div ref={(node: HTMLDivElement) => { this.btn_function_4 = node }} style={_style} id="btn-function-4" className="btn">功能4</div>
+            <div className="fun-btn-area">
+              <div className="fun-item">
+                <div ref={(node: HTMLDivElement) => { this.btn_function_1 = node }} style={_style} id="btn-function-1" className="fun-btn">
+                  <label data-tooltip={tooltip1} data-tooltip-position="top" style={tooltip_style}>功能1</label>
+                </div>
+              </div>
+              <div className="fun-item">
+                <div ref={(node: HTMLDivElement) => { this.btn_function_2 = node }} style={_style} id="btn-function-1" className="fun-btn">
+                  <label data-tooltip={tooltip2} data-tooltip-position="top" style={tooltip_style}>功能2</label>
+                </div>
+              </div>
+              <div className="fun-item">
+                <div ref={(node: HTMLDivElement) => { this.btn_function_3 = node }} style={_style} id="btn-function-1" className="fun-btn">
+                  <label data-tooltip={tooltip3} data-tooltip-position="top" style={tooltip_style}>功能3</label>
+                </div>
+              </div>
+              <div className="fun-item">
+                <div ref={(node: HTMLDivElement) => { this.btn_function_4 = node }} style={_style} id="btn-function-1" className="fun-btn">
+                  <label data-tooltip={tooltip4} data-tooltip-position="top" style={tooltip_style}>功能4</label>
+                </div>
+              </div>
+            </div>
             <div ref={(node: HTMLDivElement) => { this.btn_zoomin = node }} id="btn-zoomin" className="btn">+</div>
             <div ref={(node: HTMLDivElement) => { this.btn_zoomout = node }} id="btn-zoomout" className="btn">-</div>
             <div className="paper-container" ref={(node: HTMLDivElement) => { this.paperContainer = node }} >

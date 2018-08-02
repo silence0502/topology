@@ -187,9 +187,6 @@ let vimOption = (opt: IvimOption) => {
         if (opt.id) {
             option.id = opt.id
         }
-        if (opt.isHighlight) {
-            option.attrs['.body'].stroke = '#2AD2C9'
-        }
         if (opt.bizFields) {
             option.bizFields = opt.bizFields
         }
@@ -215,7 +212,7 @@ let vimOption = (opt: IvimOption) => {
                     dataIcon = `xlink:href=${opt.switch}`
                     break;
             }
-            option.markup = `<g class="rotatable" ${dataTooltip}><image ${dataIcon} x="0" y="0" height="100px" width="100px"/> </g>`
+            option.markup = `<g class="rotatable" ${dataTooltip}><image ${dataIcon} x="0" y="0" height="70px" width="70px"/> </g>`
         }
         if (opt.type) {
             option.attrs['.label'].text = opt.type

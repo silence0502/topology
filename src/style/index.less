@@ -13,6 +13,35 @@
         .app-body {
             position: relative;
             height: 100%;
+            .fun-btn-area {
+                position: absolute;
+                top: 10px;
+                left: 50%;
+                z-index: 999;
+                margin-left: -160px;
+                .fun-item {
+                    display: inline-block;
+                    position: relative;
+                    width: 70px;
+                    height: 40px;
+                    margin-right: 10px;
+                    .fun-btn {
+                        width: 70px;
+                        height: 40px;
+                        border-radius: 4px;
+                        line-height: 40px;
+                        text-align: center;
+                        border: 1px solid #ccc;
+                        margin-bottom: 80px;
+                        border: 1px solid transparent;
+                        background-color: #00b388;
+                        border-color: #00b388;
+                        cursor: pointer;
+                        font-size: 18px;
+                        color: #fff;
+                    }
+                }
+            }
             .btn {
                 z-index: 999;
                 width: 40px;
@@ -51,30 +80,6 @@
                 top: 10px;
                 left: 180px;
             }
-            #btn-function-1 {
-                width: 70px;
-                top: 10px;
-                right: 670px;
-                font-size: 18px;
-            }
-            #btn-function-2 {
-                width: 70px;
-                top: 10px;
-                right: 590px;
-                font-size: 18px;
-            }
-            #btn-function-3 {
-                width: 70px;
-                top: 10px;
-                right: 510px;
-                font-size: 18px;
-            }
-            #btn-function-4 {
-                width: 70px;
-                top: 10px;
-                right: 430px;
-                font-size: 18px;
-            }
             #btn-zoomin {
                 top: 10px;
                 right: 80px;
@@ -98,4 +103,9 @@
             }
         }
     }
+}
+
+
+.joint-element {
+    cursor: pointer;
 }
