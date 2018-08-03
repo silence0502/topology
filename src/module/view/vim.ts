@@ -7,8 +7,8 @@ let VIM = joint.shapes.basic.Generic.extend({
     defaults: _.defaultsDeep({
         type: 'VIM',
         size: {
-            width: 120,
-            height: 60
+            width: 180,
+            height: 30
         },
         attrs: {
             '.': {
@@ -16,8 +16,8 @@ let VIM = joint.shapes.basic.Generic.extend({
             },
             '.label': {
                 text: '',
-                'ref-x': .5,
-                'ref-y': .4,
+                'ref-x': .55,
+                'ref-y': .25,
                 'font-size': 14,
                 'text-anchor': 'middle',
                 fill: '#000'
@@ -41,8 +41,10 @@ let VIM = joint.shapes.basic.Generic.extend({
             '.body': {
                 'ref-width': '100%',
                 'ref-height': '100%',
+                'rx': '10px',
+                'ry': '10px',
                 stroke: '#00B388',
-                'stroke-width': 3
+                'stroke-width': 2
             }
         }
     }, joint.shapes.basic.Generic.prototype.defaults),
@@ -212,10 +214,16 @@ let vimOption = (opt: IvimOption) => {
                     dataIcon = `xlink:href=${opt.switch}`
                     break;
             }
-            option.markup = `<g class="rotatable" ${dataTooltip}><image ${dataIcon} x="0" y="0" height="70px" width="70px"/> </g>`
+            // option.markup = `<g class="rotatable" ${dataTooltip}><image ${dataIcon} x="0" y="0" height="70px" width="70px"/> </g>`
+            option.markup = `<g class="rotatable" ${dataTooltip}><rect class="body"/><image ${dataIcon} x="1" y="1" height="28px" width="28px"/><rect class="card"/><text class="label"/><text class="type"/></g>`
         }
-        if (opt.type) {
-            option.attrs['.label'].text = opt.type
+        if (opt.label) {
+            if (opt.label)
+                if (opt.label.length > 8) {
+                    option.attrs['.label'].text = opt.label.substring(0, 6) + '...'
+                } else {
+                    option.attrs['.label'].text = opt.label
+                }
         }
     }
     return option

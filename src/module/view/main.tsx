@@ -65,7 +65,7 @@ export default class Main extends React.Component<MainProps, any> {
     let paper = this.paper
     graph.on('signal', function (cell: any, data: any) {
       if (cell instanceof joint.dia.Link) {
-        if (cell.attributes.state == 0) {
+        if (cell.attributes.state == 100) {
           let targetCell = graph.getCell(cell.get('target').id);
           let s: any = paper.findViewByModel(cell)
           s.sendToken(V('circle', { r: 7, fill: 'green' }).node, 1000, function () {
