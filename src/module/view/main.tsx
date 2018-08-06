@@ -265,15 +265,25 @@ export default class Main extends React.Component<MainProps, any> {
    * 布局切换
    */
   renderLayout() {
-    let graphBBox = joint.layout.DirectedGraph.layout(this.graph, {
-      nodeSep: 50,
-      edgeSep: 80,
-      marginX: 100,
-      marginY: 100,
-      rankSep: 100,
-      rankDir: this.state.rankDir,
+    // let graphBBox = joint.layout.DirectedGraph.layout(this.graph, {
+    //   nodeSep: 50,
+    //   edgeSep: 80,
+    //   marginX: 100,
+    //   marginY: 100,
+    //   rankSep: 100,
+    //   rankDir: this.state.rankDir,
+    // });
+
+    var graphLayout = new joint.layout.TreeLayout({
+      graph: this.graph,
+      parentGap: 20,
+      siblingGap: 20
     });
+
+    graphLayout.layout();
   }
+
+
   changeLayout_tb() {
     this.setState({
       rankDir: 'TB'

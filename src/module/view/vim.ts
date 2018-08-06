@@ -92,7 +92,8 @@ let linkOption = (opt: IlinkOption) => {
                 fill: '#C6C9CA',//箭头颜色
                 d: 'M 10 0 L 0 5 L 10 10 z'//箭头样式
             },
-        }
+        },
+        // router: { name: 'orthogonal' },
     }
     if (opt) {
         option.state = opt.state
@@ -140,7 +141,7 @@ let linkOption = (opt: IlinkOption) => {
                 break;
         }
         switch (opt.type) {
-            case 0:
+            case 4:
                 option.attrs['.marker-target'].d = 'M 10 0 L 0 5 L 10 10 z';  //三角箭头
                 break;
             case 1:
@@ -153,7 +154,7 @@ let linkOption = (opt: IlinkOption) => {
             case 3:
                 option.attrs['.marker-target'].d = 'M 10 0 L 0 5 L 10 10 L 0 5 z'; //尖箭头
                 break;
-            case 4:
+            case 0:
                 option.attrs['.marker-target'].d = ''; //没有箭头
                 break;
             default:
