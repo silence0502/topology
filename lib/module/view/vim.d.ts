@@ -20,6 +20,8 @@ export interface IvimOption {
     vnf?: any;
     vnfc?: any;
     server?: any;
+    x?: any;
+    y?: any;
 }
 declare let vimOption: (opt: IvimOption) => any;
 export { VIM, vimOption, Link, linkOption };
