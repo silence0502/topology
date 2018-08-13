@@ -24,7 +24,9 @@ export default class Main extends React.Component<MainProps, any> {
     btn_function_2: HTMLDivElement;
     btn_function_3: HTMLDivElement;
     btn_function_4: HTMLDivElement;
+    btn_more: HTMLDivElement;
     btn_zoomin: HTMLDivElement;
+    btn_map: HTMLDivElement;
     btn_zoomout: HTMLDivElement;
     navigator: HTMLDivElement;
     graph: joint.dia.Graph;
@@ -44,6 +46,7 @@ export default class Main extends React.Component<MainProps, any> {
     parseData(data: any, images: any): void;
     initializePaper(): void;
     initializeNavigator(): void;
+    small_map(): void;
     function_1(): void;
     function_2(): void;
     function_3(): void;
@@ -56,6 +59,11 @@ export default class Main extends React.Component<MainProps, any> {
     zoomIn(): void;
     zoomOut(): void;
     constructor(props: MainProps);
+    componentWillMount(): void;
     componentDidMount(): void;
+    renderMap(): JSX.Element;
+    link_1(): void;
+    link_2(): void;
+    link_3(): void;
     render(): JSX.Element;
 }

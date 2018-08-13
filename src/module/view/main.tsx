@@ -33,7 +33,9 @@ export default class Main extends React.Component<MainProps, any> {
   btn_function_2: HTMLDivElement
   btn_function_3: HTMLDivElement
   btn_function_4: HTMLDivElement
+  btn_more: HTMLDivElement
   btn_zoomin: HTMLDivElement
+  btn_map: HTMLDivElement
   btn_zoomout: HTMLDivElement
   navigator: HTMLDivElement
 
@@ -50,7 +52,7 @@ export default class Main extends React.Component<MainProps, any> {
     paper_width: 1000,
     paper_height: 1000,
     drawGrid: false,
-    rankDir: 'TB',
+    rankDir: 'LR',
     data: {},
     images: {},
     center: false,
@@ -219,6 +221,7 @@ export default class Main extends React.Component<MainProps, any> {
     this.btn_function_2.onclick = this.function_2.bind(this)
     this.btn_function_3.onclick = this.function_3.bind(this)
     this.btn_function_4.onclick = this.function_4.bind(this)
+    this.btn_map.onclick = this.small_map.bind(this)
     this.btn_zoomin.onclick = this.zoomIn.bind(this)
     this.btn_zoomout.onclick = this.zoomOut.bind(this)
   }
@@ -235,6 +238,21 @@ export default class Main extends React.Component<MainProps, any> {
     });
     $('.navigator').append(navigator.el);
     navigator.render();
+  }
+
+  /*
+   * 打开关闭缩略图
+   */
+  small_map() {
+    if (this.state.visable === true) {
+      this.setState({
+        visable: false
+      })
+    } else {
+      this.setState({
+        visable: true
+      })
+    }
   }
 
   /*
@@ -265,25 +283,27 @@ export default class Main extends React.Component<MainProps, any> {
    * 布局切换
    */
   renderLayout() {
-    // let graphBBox = joint.layout.DirectedGraph.layout(this.graph, {
-    //   nodeSep: 50,
-    //   edgeSep: 80,
-    //   marginX: 100,
-    //   marginY: 100,
-    //   rankSep: 100,
-    //   rankDir: this.state.rankDir,
-    // });
-
-    var graphLayout = new joint.layout.TreeLayout({
-      graph: this.graph,
-      parentGap: 20,
-      siblingGap: 20
+    let graphBBox = joint.layout.DirectedGraph.layout(this.graph, {
+      nodeSep: 50,
+      edgeSep: 80,
+      marginX: 100,
+      marginY: 100,
+      rankSep: 100,
+      rankDir: this.state.rankDir,
     });
 
-    graphLayout.layout();
+    // var graphLayout = new joint.layout.TreeLayout({
+    //   graph: this.graph,
+    //   parentGap: 20,
+    //   siblingGap: 20
+    // });
+
+    // graphLayout.layout();
   }
 
-
+  /*
+    * 修改布局按钮
+    */
   changeLayout_tb() {
     this.setState({
       rankDir: 'TB'
@@ -326,9 +346,14 @@ export default class Main extends React.Component<MainProps, any> {
   constructor(props: MainProps) {
     super(props);
     this.state = {
-      rankDir: 'TB',
-      disabled: false
+      rankDir: 'LR',
+      disabled: false,
+      visable: true
     }
+  }
+
+  componentWillMount() {
+
   }
 
   componentDidMount() {
@@ -336,10 +361,32 @@ export default class Main extends React.Component<MainProps, any> {
     this.initializeNavigator();
   }
 
+  renderMap() {
+    let { visable } = this.state
+    if (visable === true) {
+      return <div className="navigator" id="navigator" ref={(node: HTMLDivElement) => { this.navigator = node }} />
+    } else {
+      return <div className="navigator" id="navigator" ref={(node: HTMLDivElement) => { this.navigator = node }} style={{ display: 'none' }} />
+    }
+  }
+
+  link_1() {
+    console.log('----------------->link-1');
+  }
+
+  link_2() {
+    console.log('----------------->link-2');
+  }
+
+  link_3() {
+    console.log('----------------->link-3');
+  }
+
   render() {
     let _style = {}
     let tooltip1 = '', tooltip2 = '', tooltip3 = '', tooltip4 = ''
     let tooltip_style = {}
+    let more_style = {}
     if (this.state.disabled === false) {
       _style = {
         color: 'rgba(0,0,0,.25)',
@@ -349,6 +396,7 @@ export default class Main extends React.Component<MainProps, any> {
       }
       tooltip1 = tooltip2 = tooltip3 = tooltip4 = '请选中元件'
       tooltip_style = { cursor: 'not-allowed' }
+      more_style = { display: 'none' }
     } else {
       tooltip1 = '功能1'
       tooltip2 = '功能2'
@@ -356,6 +404,7 @@ export default class Main extends React.Component<MainProps, any> {
       tooltip4 = '功能4'
       tooltip_style = { cursor: 'pointer' }
     }
+    let onMap = this.state.visable === true ? '关闭缩略图' : '打开缩略图'
     return (
       <div className="Topology" style={{ width: this.props.width, height: this.props.height }}  >
         <div className="topology-app">
@@ -385,13 +434,23 @@ export default class Main extends React.Component<MainProps, any> {
                   <label data-tooltip={tooltip4} data-tooltip-position="top" style={tooltip_style}>功能4</label>
                 </div>
               </div>
+              <div className="fun-item-more">
+                <div ref={(node: HTMLDivElement) => { this.btn_more = node }} style={_style} id="btn-function-1" className="fun-btn">
+                  更多
+                </div>
+                <div className="dropdown-content" style={more_style}>
+                  <a href="jacascript:;" onClick={this.link_1.bind(this)}>下拉菜单项 1</a>
+                  <a href="jacascript:;" onClick={this.link_2.bind(this)}>下拉菜单项 2</a>
+                  <a href="jacascript:;" onClick={this.link_3.bind(this)}>下拉菜单项 3</a>
+                </div>
+              </div>
             </div>
+            <div ref={(node: HTMLDivElement) => { this.btn_map = node }} id="btn-map" className="btn">{onMap}</div>
             <div ref={(node: HTMLDivElement) => { this.btn_zoomin = node }} id="btn-zoomin" className="btn">+</div>
             <div ref={(node: HTMLDivElement) => { this.btn_zoomout = node }} id="btn-zoomout" className="btn">-</div>
             <div className="paper-container" ref={(node: HTMLDivElement) => { this.paperContainer = node }} >
             </div>
-            <div className="navigator" id="navigator" ref={(node: HTMLDivElement) => { this.navigator = node }} >
-            </div>
+            {this.renderMap()}
           </div>
         </div>
       </div>
