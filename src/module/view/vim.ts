@@ -101,11 +101,7 @@ let linkOption = (opt: IlinkOption) => {
             },
         },
         router: {
-            name: 'manhattan',
-            // excludeEnds: 'source',
-            // excludeTypes: 'myNamespace.MyCommentElement',
-            startDirections: ['left', 'right', 'top', 'bottom'],
-            endDirections: ['left', 'right', 'top', 'bottom']
+            name: 'normal'
         },
         connector: {
             name: 'normal'
@@ -124,6 +120,7 @@ let linkOption = (opt: IlinkOption) => {
                 option.attrs['.connection'].stroke = '#C6C9CA';
                 option.attrs['.marker-target'].fill = '#C6C9CA';
                 option.attrs['.marker-target'].stroke = '#C6C9CA';
+                option.router.name = 'manhattan';
                 break;
             case 1:
                 option.attrs['.connection'].stroke = '#D10002';

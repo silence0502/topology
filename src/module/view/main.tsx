@@ -182,6 +182,12 @@ export default class Main extends React.Component<MainProps, any> {
       }
     });
 
+    if (this.props.data.links_2) {
+      _.map(this.props.data.links_2, (link_2) => {
+        new Link(linkOption(link_2)).addTo(this.graph)
+      })
+    }
+
     /*
      * 双击事件
      */
