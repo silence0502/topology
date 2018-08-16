@@ -160,6 +160,7 @@ export default class Main extends React.Component<MainProps, any> {
     $(this.paperContainer).append(paperScroller.el);
 
     this.renderLayout()
+    this.renderLinks_2()
 
     paperScroller.render();
     if (this.props.center) { paperScroller.center() }
@@ -181,12 +182,6 @@ export default class Main extends React.Component<MainProps, any> {
         })
       }
     });
-
-    if (this.props.data.links_2) {
-      _.map(this.props.data.links_2, (link_2) => {
-        new Link(linkOption(link_2)).addTo(this.graph)
-      })
-    }
 
     /*
      * 双击事件
@@ -294,8 +289,8 @@ export default class Main extends React.Component<MainProps, any> {
       edgeSep: 80,
       marginX: 100,
       marginY: 100,
-      rankSep: 100,
-      rankDir: this.state.rankDir,
+      rankSep: 80,
+      rankDir: this.state.rankDir
     });
 
     // var graphLayout = new joint.layout.TreeLayout({
@@ -305,6 +300,17 @@ export default class Main extends React.Component<MainProps, any> {
     // });
 
     // graphLayout.layout();
+  }
+
+  /*
+   * 布局后的连线
+   */
+  renderLinks_2() {
+    if (this.props.data.links_2) {
+      _.map(this.props.data.links_2, (link_2) => {
+        new Link(linkOption(link_2)).addTo(this.graph)
+      })
+    }
   }
 
   /*

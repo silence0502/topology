@@ -32,11 +32,11 @@ let VIM = joint.shapes.basic.Generic.extend({
             },
             '.alarm': {
                 refX: '100%',
-                refX2: -15,
+                refX2: -16,
                 refY: '100%',
-                refY2: -10,
-                width: 10,
-                height: 10,
+                refY2: -16,
+                width: 15,
+                height: 15,
             },
             '.logo': {
                 x: -1,
@@ -67,7 +67,7 @@ let Link = joint.dia.Link.extend({
     defaults: _.defaultsDeep({
         type: 'Link',
         attrs: {
-            '.connection': { stroke: '#C6C9CA', 'stroke-width': 3 },
+            '.connection': { stroke: '#C6C9CA', 'stroke-width': 1 },
             '.link-tools': { display: 'none' },
             '.marker-arrowheads': { display: 'none' },
         },
@@ -118,6 +118,7 @@ let linkOption = (opt: IlinkOption) => {
         switch (opt.state) {
             case 0:
                 option.attrs['.connection'].stroke = '#C6C9CA';
+                option.attrs['.connection']['stroke-width'] = 3;
                 option.attrs['.marker-target'].fill = '#C6C9CA';
                 option.attrs['.marker-target'].stroke = '#C6C9CA';
                 option.router.name = 'manhattan';
@@ -125,33 +126,34 @@ let linkOption = (opt: IlinkOption) => {
             case 1:
                 option.attrs['.connection'].stroke = '#D10002';
                 option.attrs['.marker-target'].fill = '#fff';
-                option.attrs['.connection']['stroke-dasharray'] = '5 2';
+                option.attrs['.connection']['stroke-dasharray'] = '5 3';
                 option.attrs['.marker-target'].stroke = '#D10002';
                 option.connector.name = 'smooth';
                 break;
             case 2:
                 option.attrs['.connection'].stroke = '#FF9901'
-                option.attrs['.connection']['stroke-dasharray'] = '5 2';
+                option.attrs['.connection']['stroke-dasharray'] = '5 3';
                 option.attrs['.marker-target'].fill = '#FF9901';
                 option.attrs['.marker-target'].stroke = '#FF9901';
                 option.connector.name = 'smooth';
                 break;
             case 3:
                 option.attrs['.connection'].stroke = '#DFB202'
-                option.attrs['.connection']['stroke-dasharray'] = '5 2';
+                option.attrs['.connection']['stroke-dasharray'] = '5 3';
                 option.attrs['.marker-target'].fill = '#DFB202';
                 option.attrs['.marker-target'].stroke = '#DFB202';
                 option.connector.name = 'smooth';
                 break;
             case 4:
                 option.attrs['.connection'].stroke = '#00BFFF'
-                option.attrs['.connection']['stroke-dasharray'] = '5 2';
+                option.attrs['.connection']['stroke-dasharray'] = '5 3';
                 option.attrs['.marker-target'].fill = '#00BFFF';
                 option.attrs['.marker-target'].stroke = '#00BFFF';
                 option.connector.name = 'smooth';
                 break;
             default:
                 option.attrs['.connection'].stroke = '#C6C9CA';
+                option.attrs['.connection']['stroke-width'] = 3;
                 option.attrs['.marker-target'].fill = '#C6C9CA';
                 option.attrs['.marker-target'].stroke = '#C6C9CA';
                 break;

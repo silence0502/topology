@@ -52,6 +52,7 @@ export default class Main extends React.Component<MainProps, any> {
     function_3(): void;
     function_4(): void;
     renderLayout(): void;
+    renderLinks_2(): void;
     changeLayout_tb(): void;
     changeLayout_bt(): void;
     changeLayout_lr(): void;
