@@ -25,10 +25,10 @@ export default class Main extends React.Component<MainProps, any> {
 
   // Conatiner
   paperContainer: HTMLDivElement
-  btn_changeLayout_tb: HTMLDivElement
-  btn_changeLayout_bt: HTMLDivElement
-  btn_changeLayout_lr: HTMLDivElement
-  btn_changeLayout_rl: HTMLDivElement
+  // btn_changeLayout_tb: HTMLDivElement
+  // btn_changeLayout_bt: HTMLDivElement
+  // btn_changeLayout_lr: HTMLDivElement
+  // btn_changeLayout_rl: HTMLDivElement
   btn_function_1: HTMLDivElement
   btn_function_2: HTMLDivElement
   btn_function_3: HTMLDivElement
@@ -214,10 +214,10 @@ export default class Main extends React.Component<MainProps, any> {
     /*
      * 按钮
      */
-    this.btn_changeLayout_tb.onclick = this.changeLayout_tb.bind(this)
-    this.btn_changeLayout_bt.onclick = this.changeLayout_bt.bind(this)
-    this.btn_changeLayout_lr.onclick = this.changeLayout_lr.bind(this)
-    this.btn_changeLayout_rl.onclick = this.changeLayout_rl.bind(this)
+    // this.btn_changeLayout_tb.onclick = this.changeLayout_tb.bind(this)
+    // this.btn_changeLayout_bt.onclick = this.changeLayout_bt.bind(this)
+    // this.btn_changeLayout_lr.onclick = this.changeLayout_lr.bind(this)
+    // this.btn_changeLayout_rl.onclick = this.changeLayout_rl.bind(this)
     this.btn_function_1.onclick = this.function_1.bind(this)
     this.btn_function_2.onclick = this.function_2.bind(this)
     this.btn_function_3.onclick = this.function_3.bind(this)
@@ -290,16 +290,8 @@ export default class Main extends React.Component<MainProps, any> {
       marginX: 100,
       marginY: 100,
       rankSep: 80,
-      rankDir: this.state.rankDir
+      rankDir: 'LR'
     });
-
-    // var graphLayout = new joint.layout.TreeLayout({
-    //   graph: this.graph,
-    //   parentGap: 20,
-    //   siblingGap: 20
-    // });
-
-    // graphLayout.layout();
   }
 
   /*
@@ -316,34 +308,34 @@ export default class Main extends React.Component<MainProps, any> {
   /*
     * 修改布局按钮
     */
-  changeLayout_tb() {
-    this.setState({
-      rankDir: 'TB'
-    }, () => {
-      this.renderLayout()
-    })
-  }
-  changeLayout_bt() {
-    this.setState({
-      rankDir: 'BT'
-    }, () => {
-      this.renderLayout()
-    })
-  }
-  changeLayout_lr() {
-    this.setState({
-      rankDir: 'LR'
-    }, () => {
-      this.renderLayout()
-    })
-  }
-  changeLayout_rl() {
-    this.setState({
-      rankDir: 'RL'
-    }, () => {
-      this.renderLayout()
-    })
-  }
+  // changeLayout_tb() {
+  //   this.setState({
+  //     rankDir: 'TB'
+  //   }, () => {
+  //     this.renderLayout()
+  //   })
+  // }
+  // changeLayout_bt() {
+  //   this.setState({
+  //     rankDir: 'BT'
+  //   }, () => {
+  //     this.renderLayout()
+  //   })
+  // }
+  // changeLayout_lr() {
+  //   this.setState({
+  //     rankDir: 'LR'
+  //   }, () => {
+  //     this.renderLayout()
+  //   })
+  // }
+  // changeLayout_rl() {
+  //   this.setState({
+  //     rankDir: 'RL'
+  //   }, () => {
+  //     this.renderLayout()
+  //   })
+  // }
 
   /*
    * 放大缩小
@@ -358,7 +350,7 @@ export default class Main extends React.Component<MainProps, any> {
   constructor(props: MainProps) {
     super(props);
     this.state = {
-      rankDir: 'LR',
+      // rankDir: 'LR',
       disabled: false,
       visable: true
     }
@@ -421,10 +413,10 @@ export default class Main extends React.Component<MainProps, any> {
       <div className="Topology" style={{ width: this.props.width, height: this.props.height }}  >
         <div className="topology-app">
           <div className="app-body">
-            <div ref={(node: HTMLDivElement) => { this.btn_changeLayout_tb = node }} id="btn-changeLayout-tb" className="btn">↓</div>
+            {/* <div ref={(node: HTMLDivElement) => { this.btn_changeLayout_tb = node }} id="btn-changeLayout-tb" className="btn">↓</div>
             <div ref={(node: HTMLDivElement) => { this.btn_changeLayout_bt = node }} id="btn-changeLayout-bt" className="btn">↑</div>
             <div ref={(node: HTMLDivElement) => { this.btn_changeLayout_lr = node }} id="btn-changeLayout-lr" className="btn">→</div>
-            <div ref={(node: HTMLDivElement) => { this.btn_changeLayout_rl = node }} id="btn-changeLayout-rl" className="btn">←</div>
+            <div ref={(node: HTMLDivElement) => { this.btn_changeLayout_rl = node }} id="btn-changeLayout-rl" className="btn">←</div> */}
             <div className="fun-btn-area">
               <div className="fun-item">
                 <div ref={(node: HTMLDivElement) => { this.btn_function_1 = node }} style={_style} id="btn-function-1" className="fun-btn">

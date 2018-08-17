@@ -16,10 +16,6 @@ export interface MainProps {
 }
 export default class Main extends React.Component<MainProps, any> {
     paperContainer: HTMLDivElement;
-    btn_changeLayout_tb: HTMLDivElement;
-    btn_changeLayout_bt: HTMLDivElement;
-    btn_changeLayout_lr: HTMLDivElement;
-    btn_changeLayout_rl: HTMLDivElement;
     btn_function_1: HTMLDivElement;
     btn_function_2: HTMLDivElement;
     btn_function_3: HTMLDivElement;
@@ -53,10 +49,6 @@ export default class Main extends React.Component<MainProps, any> {
     function_4(): void;
     renderLayout(): void;
     renderLinks_2(): void;
-    changeLayout_tb(): void;
-    changeLayout_bt(): void;
-    changeLayout_lr(): void;
-    changeLayout_rl(): void;
     zoomIn(): void;
     zoomOut(): void;
     constructor(props: MainProps);
