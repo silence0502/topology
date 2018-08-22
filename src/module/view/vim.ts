@@ -212,7 +212,7 @@ let vimOption = (opt: IvimOption) => {
                     dataIcon = `xlink:href=${opt.switch}`
                     break;
             }
-            option.markup = `<g class="rotatable" ${dataTooltip}><image ${dataIcon} x="0" y="0" height="70px" width="70px"/> </g>`
+            option.markup = `<g class="rotatable" ${dataTooltip}><image ${dataIcon} x="0" y="0" height="50px" width="50px"/> </g>`
         }
         if (opt.type) {
             option.attrs['.label'].text = opt.type
