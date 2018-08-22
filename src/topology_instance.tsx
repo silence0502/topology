@@ -2,11 +2,11 @@ import './style/index'
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import Topology from './module/view/main';
+import TopologyInstance from './module/view/main';
 
 const init = (mountNodeId = 'root', opt: any) => {
   ReactDOM.render(
-    <Topology
+    <TopologyInstance
       rankDir={opt.rankDir}
       animate={opt.animate}
       cid={opt.cid}
@@ -20,5 +20,5 @@ const init = (mountNodeId = 'root', opt: any) => {
 
 export {
   init,
-  Topology
+  TopologyInstance
 }

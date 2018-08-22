@@ -104,11 +104,11 @@ const sourceMap = nodeEnv === dev ? 'inline' : false;
 
 export default {
   plugins,
-  input: 'src/topology.tsx',
+  input: 'src/topology_instance.tsx',
   output: {
-    name: 'topology',
+    name: 'topology_instance',
     format: 'umd',
-    file: 'lib/topology.js',
+    file: 'lib/topology_instance.js',
     sourcemap: sourceMap,
     globals: {
       jquery: '$',
