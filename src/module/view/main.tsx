@@ -237,7 +237,7 @@ export default class Main extends React.Component<MainProps, any> {
       paperScroller: this.paperScroller,
       zoom: false,
     });
-    $('.navigator').append(navigator.el);
+    $('.navigator_instance').append(navigator.el);
     navigator.render();
   }
 
@@ -245,13 +245,13 @@ export default class Main extends React.Component<MainProps, any> {
    * 打开关闭缩略图
    */
   small_map() {
-    if (this.state.visable === true) {
+    if (this.state.visable_instance === true) {
       this.setState({
-        visable: false
+        visable_instance: false
       })
     } else {
       this.setState({
-        visable: true
+        visable_instance: true
       })
     }
   }
@@ -352,7 +352,7 @@ export default class Main extends React.Component<MainProps, any> {
     this.state = {
       // rankDir: 'LR',
       disabled: false,
-      visable: true
+      visable_instance: true
     }
   }
 
@@ -366,11 +366,11 @@ export default class Main extends React.Component<MainProps, any> {
   }
 
   renderMap() {
-    let { visable } = this.state
-    if (visable === true) {
-      return <div className="navigator" id="navigator" ref={(node: HTMLDivElement) => { this.navigator = node }} />
+    let { visable_instance } = this.state
+    if (visable_instance === true) {
+      return <div className="navigator_instance" id="navigator_instance" ref={(node: HTMLDivElement) => { this.navigator = node }} />
     } else {
-      return <div className="navigator" id="navigator" ref={(node: HTMLDivElement) => { this.navigator = node }} style={{ display: 'none' }} />
+      return <div className="navigator_instance" id="navigator_instance" ref={(node: HTMLDivElement) => { this.navigator = node }} style={{ display: 'none' }} />
     }
   }
 
@@ -410,7 +410,7 @@ export default class Main extends React.Component<MainProps, any> {
     }
     let onMap = this.state.visable === true ? '关闭缩略图' : '打开缩略图'
     return (
-      <div className="Topology" style={{ width: this.props.width, height: this.props.height }}  >
+      <div className="topology_instance" style={{ width: this.props.width, height: this.props.height }}  >
         <div className="topology-app">
           <div className="app-body">
             {/* <div ref={(node: HTMLDivElement) => { this.btn_changeLayout_tb = node }} id="btn-changeLayout-tb" className="btn">↓</div>
