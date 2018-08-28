@@ -408,7 +408,7 @@ export default class Main extends React.Component<MainProps, any> {
       tooltip4 = '功能4'
       tooltip_style = { cursor: 'pointer' }
     }
-    let onMap = this.state.visable === true ? '关闭缩略图' : '打开缩略图'
+    let onMap = this.state.visable_instance === true ? '关闭缩略图' : '打开缩略图'
     return (
       <div className="topology_instance" style={{ width: this.props.width, height: this.props.height }}  >
         <div className="topology-app">
