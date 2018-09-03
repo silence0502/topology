@@ -352,7 +352,7 @@ export default class Main extends React.Component<MainProps, any> {
     this.state = {
       // rankDir: 'LR',
       disabled: false,
-      visable_instance: true
+      visable_instance: false
     }
   }
 
