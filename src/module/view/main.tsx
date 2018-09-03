@@ -336,7 +336,7 @@ export default class Main extends React.Component<MainProps, any> {
     this.state = {
       // rankDir: 'TB',
       disabled: false,
-      visable_model: true
+      visable_model: false
     }
   }
 
