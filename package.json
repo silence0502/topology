@@ -7,8 +7,8 @@
   "author": "王喆 <zhe.wang6@hpe.com>",
   "license": "MIT",
   "scripts": {
-    "build": "rollup -c",
-    "watch": "rollup -cw",
+    "build": "cross-env NODE_ENV=production rollup -c",
+    "watch": "cross-env NODE_ENV=development rollup -cw",
     "lint": "tslint --project tsconfig.json --type-check",
     "release": "standard-version",
     "dump": "npm run release  -- --prerelease"
