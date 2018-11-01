@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { VIM, Link, vimOption, linkOption } from './vim'
 import _ from 'lodash';
+import './fullscreen'
 
 declare let V: any
 declare const joint: any
+declare var fullscreen: any
 
 export interface MainProps {
   animate?: boolean
@@ -22,28 +24,23 @@ export interface MainProps {
 }
 
 export default class Main extends React.Component<MainProps, any> {
-
   // Conatiner
   paperContainer: HTMLDivElement
-  // btn_changeLayout_tb: HTMLDivElement
-  // btn_changeLayout_bt: HTMLDivElement
-  // btn_changeLayout_lr: HTMLDivElement
-  // btn_changeLayout_rl: HTMLDivElement
-  btn_function_1: HTMLDivElement
-  btn_function_2: HTMLDivElement
-  btn_function_3: HTMLDivElement
-  btn_function_4: HTMLDivElement
+  // btn_function_1: HTMLDivElement
+  // btn_function_2: HTMLDivElement
+  // btn_function_3: HTMLDivElement
+  // btn_function_4: HTMLDivElement
   btn_more: HTMLDivElement
   btn_zoomin: HTMLDivElement
   btn_map: HTMLDivElement
   btn_zoomout: HTMLDivElement
   navigator: HTMLDivElement
+  btn_fullscreen: HTMLDivElement
 
   // rappid things
   graph: joint.dia.Graph;
   commandManager: joint.dia.CommandManager;
   paper: joint.dia.Paper;
-  snaplines: joint.ui.Snaplines;
   paperScroller: joint.ui.PaperScroller;
   static defaultProps: MainProps = {
     animate: true,
@@ -67,7 +64,7 @@ export default class Main extends React.Component<MainProps, any> {
     let paper = this.paper
     graph.on('signal', function (cell: any, data: any) {
       if (cell instanceof joint.dia.Link) {
-        if (cell.attributes.state == 100) {
+        if (cell.attributes.state === 100) {
           let targetCell = graph.getCell(cell.get('target').id);
           let s: any = paper.findViewByModel(cell)
           s.sendToken(V('circle', { r: 7, fill: 'green' }).node, 1000, function () {
@@ -84,7 +81,7 @@ export default class Main extends React.Component<MainProps, any> {
 
     let sources: any = []
     let targets: any = []
-    _.map(graph.getLinks(), (link) => {
+    _.map(graph.getLinks(), (link: any) => {
       sources.push(link.get('source').id)
       targets.push(link.get('target').id)
     })
@@ -99,7 +96,6 @@ export default class Main extends React.Component<MainProps, any> {
     }
     simulate()
   }
-
 
   /**
    * 数据解析
@@ -139,16 +135,9 @@ export default class Main extends React.Component<MainProps, any> {
 
     this.parseData(this.props.data, this.props.images)
 
-
-
-
     if (this.props.animate) {
       this.doAnimate()
     }
-
-
-
-    // this.snaplines = new joint.ui.Snaplines({ paper: paper });
 
     const paperScroller = this.paperScroller = new joint.ui.PaperScroller({
       paper,
@@ -166,13 +155,13 @@ export default class Main extends React.Component<MainProps, any> {
     if (this.props.center) { paperScroller.center() }
     if (this.props.zoomToFit) { paperScroller.zoomToFit() }
 
-    new joint.ui.Tooltip({
+    let tool_tip = new joint.ui.Tooltip({
       target: '[data-tooltip]',
       content: (target: any) => {
         let tips = _.split(target.attributes['data-tooltip'].nodeValue, '|')
         return _.map(_.split(target.attributes['data-tooltip'].nodeValue, '|'), (item, index) => {
-          if (index == 0 && tips.length > 1) {
-            if (tips[0] != tips[1]) {
+          if (index === 0 && tips.length > 1) {
+            if (tips[0] !== tips[1]) {
               return `<b>${item}</b><hr />`
             } else {
               return ''
@@ -214,17 +203,14 @@ export default class Main extends React.Component<MainProps, any> {
     /*
      * 按钮
      */
-    // this.btn_changeLayout_tb.onclick = this.changeLayout_tb.bind(this)
-    // this.btn_changeLayout_bt.onclick = this.changeLayout_bt.bind(this)
-    // this.btn_changeLayout_lr.onclick = this.changeLayout_lr.bind(this)
-    // this.btn_changeLayout_rl.onclick = this.changeLayout_rl.bind(this)
-    this.btn_function_1.onclick = this.function_1.bind(this)
-    this.btn_function_2.onclick = this.function_2.bind(this)
-    this.btn_function_3.onclick = this.function_3.bind(this)
-    this.btn_function_4.onclick = this.function_4.bind(this)
+    // this.btn_function_1.onclick = this.function_1.bind(this)
+    // this.btn_function_2.onclick = this.function_2.bind(this)
+    // this.btn_function_3.onclick = this.function_3.bind(this)
+    // this.btn_function_4.onclick = this.function_4.bind(this)
     this.btn_map.onclick = this.small_map.bind(this)
     this.btn_zoomin.onclick = this.zoomIn.bind(this)
     this.btn_zoomout.onclick = this.zoomOut.bind(this)
+    this.btn_fullscreen.onclick = this.full.bind(this)
   }
 
   /*
@@ -260,23 +246,23 @@ export default class Main extends React.Component<MainProps, any> {
    * 按钮功能
    */
   function_1() {
-    if (this.state.disabled == true) {
-      console.log('-------------------------------------------------->function_1');
+    if (this.state.disabled === true) {
+      // console.log('-------------------------------------------------->function_1');
     }
   }
   function_2() {
-    if (this.state.disabled == true) {
-      console.log('-------------------------------------------------->function_2');
+    if (this.state.disabled === true) {
+      // console.log('-------------------------------------------------->function_2');
     }
   }
   function_3() {
-    if (this.state.disabled == true) {
-      console.log('-------------------------------------------------->function_3');
+    if (this.state.disabled === true) {
+      // console.log('-------------------------------------------------->function_3');
     }
   }
   function_4() {
-    if (this.state.disabled == true) {
-      console.log('-------------------------------------------------->function_4');
+    if (this.state.disabled === true) {
+      // console.log('-------------------------------------------------->function_4');
     }
   }
 
@@ -298,44 +284,12 @@ export default class Main extends React.Component<MainProps, any> {
    * 布局后的连线
    */
   renderLinks_2() {
-    if (this.props.data.links_2) {
-      _.map(this.props.data.links_2, (link_2) => {
-        new Link(linkOption(link_2)).addTo(this.graph)
+    if (this.props.data.links2) {
+      _.map(this.props.data.links2, (link2) => {
+        new Link(linkOption(link2)).addTo(this.graph)
       })
     }
   }
-
-  /*
-    * 修改布局按钮
-    */
-  // changeLayout_tb() {
-  //   this.setState({
-  //     rankDir: 'TB'
-  //   }, () => {
-  //     this.renderLayout()
-  //   })
-  // }
-  // changeLayout_bt() {
-  //   this.setState({
-  //     rankDir: 'BT'
-  //   }, () => {
-  //     this.renderLayout()
-  //   })
-  // }
-  // changeLayout_lr() {
-  //   this.setState({
-  //     rankDir: 'LR'
-  //   }, () => {
-  //     this.renderLayout()
-  //   })
-  // }
-  // changeLayout_rl() {
-  //   this.setState({
-  //     rankDir: 'RL'
-  //   }, () => {
-  //     this.renderLayout()
-  //   })
-  // }
 
   /*
    * 放大缩小
@@ -345,6 +299,12 @@ export default class Main extends React.Component<MainProps, any> {
   }
   zoomOut() {
     this.paperScroller.zoom(-0.2, { min: 0.2 });
+  }
+  full() {
+    var full = new fullscreen({
+      element: document.getElementById("topology_instance"),
+      fullscreenBtn: document.getElementById("btn-fullscreen")
+    });
   }
 
   constructor(props: MainProps) {
@@ -363,6 +323,7 @@ export default class Main extends React.Component<MainProps, any> {
   componentDidMount() {
     this.initializePaper();
     this.initializeNavigator();
+    this.full()
   }
 
   renderMap() {
@@ -375,15 +336,15 @@ export default class Main extends React.Component<MainProps, any> {
   }
 
   link_1() {
-    console.log('----------------->link-1');
+    // console.log('----------------->link-1');
   }
 
   link_2() {
-    console.log('----------------->link-2');
+    // console.log('----------------->link-2');
   }
 
   link_3() {
-    console.log('----------------->link-3');
+    // console.log('----------------->link-3');
   }
 
   render() {
@@ -410,48 +371,45 @@ export default class Main extends React.Component<MainProps, any> {
     }
     let onMap = this.state.visable_instance === true ? '关闭缩略图' : '打开缩略图'
     return (
-      <div className="topology_instance" style={{ width: this.props.width, height: this.props.height }}  >
+      <div className="topology_instance" id="topology_instance" style={{ width: this.props.width, height: this.props.height }}  >
         <div className="topology-app">
           <div className="app-body">
-            {/* <div ref={(node: HTMLDivElement) => { this.btn_changeLayout_tb = node }} id="btn-changeLayout-tb" className="btn">↓</div>
-            <div ref={(node: HTMLDivElement) => { this.btn_changeLayout_bt = node }} id="btn-changeLayout-bt" className="btn">↑</div>
-            <div ref={(node: HTMLDivElement) => { this.btn_changeLayout_lr = node }} id="btn-changeLayout-lr" className="btn">→</div>
-            <div ref={(node: HTMLDivElement) => { this.btn_changeLayout_rl = node }} id="btn-changeLayout-rl" className="btn">←</div> */}
-            <div className="fun-btn-area">
-              <div className="fun-item">
-                <div ref={(node: HTMLDivElement) => { this.btn_function_1 = node }} style={_style} id="btn-function-1" className="fun-btn">
-                  <label data-tooltip={tooltip1} data-tooltip-position="top" style={tooltip_style}>功能1</label>
-                </div>
-              </div>
-              <div className="fun-item">
-                <div ref={(node: HTMLDivElement) => { this.btn_function_2 = node }} style={_style} id="btn-function-1" className="fun-btn">
-                  <label data-tooltip={tooltip2} data-tooltip-position="top" style={tooltip_style}>功能2</label>
-                </div>
-              </div>
-              <div className="fun-item">
-                <div ref={(node: HTMLDivElement) => { this.btn_function_3 = node }} style={_style} id="btn-function-1" className="fun-btn">
-                  <label data-tooltip={tooltip3} data-tooltip-position="top" style={tooltip_style}>功能3</label>
-                </div>
-              </div>
-              <div className="fun-item">
-                <div ref={(node: HTMLDivElement) => { this.btn_function_4 = node }} style={_style} id="btn-function-1" className="fun-btn">
-                  <label data-tooltip={tooltip4} data-tooltip-position="top" style={tooltip_style}>功能4</label>
-                </div>
-              </div>
-              <div className="fun-item-more">
-                <div ref={(node: HTMLDivElement) => { this.btn_more = node }} style={_style} id="btn-function-1" className="fun-btn">
-                  更多
-                </div>
-                <div className="dropdown-content" style={more_style}>
-                  <a href="jacascript:;" onClick={this.link_1.bind(this)}>下拉菜单项 1</a>
-                  <a href="jacascript:;" onClick={this.link_2.bind(this)}>下拉菜单项 2</a>
-                  <a href="jacascript:;" onClick={this.link_3.bind(this)}>下拉菜单项 3</a>
-                </div>
-              </div>
-            </div>
+            {/* <div className="fun-btn-area">
+                            <div className="fun-item">
+                                <div ref={(node: HTMLDivElement) => { this.btn_function_1 = node }} style={_style} id="btn-function-1" className="fun-btn">
+                                    <label data-tooltip={tooltip1} data-tooltip-position="top" style={tooltip_style}>功能1</label>
+                                </div>
+                            </div>
+                            <div className="fun-item">
+                                <div ref={(node: HTMLDivElement) => { this.btn_function_2 = node }} style={_style} id="btn-function-1" className="fun-btn">
+                                    <label data-tooltip={tooltip2} data-tooltip-position="top" style={tooltip_style}>功能2</label>
+                                </div>
+                            </div>
+                            <div className="fun-item">
+                                <div ref={(node: HTMLDivElement) => { this.btn_function_3 = node }} style={_style} id="btn-function-1" className="fun-btn">
+                                    <label data-tooltip={tooltip3} data-tooltip-position="top" style={tooltip_style}>功能3</label>
+                                </div>
+                            </div>
+                            <div className="fun-item">
+                                <div ref={(node: HTMLDivElement) => { this.btn_function_4 = node }} style={_style} id="btn-function-1" className="fun-btn">
+                                    <label data-tooltip={tooltip4} data-tooltip-position="top" style={tooltip_style}>功能4</label>
+                                </div>
+                            </div>
+                            <div className="fun-item-more">
+                                <div ref={(node: HTMLDivElement) => { this.btn_more = node }} style={_style} id="btn-function-1" className="fun-btn">
+                                    更多
+                            </div>
+                                <div className="dropdown-content" style={more_style}>
+                                    <a href="jacascript:;" onClick={this.link_1.bind(this)}>下拉菜单项 1</a>
+                                    <a href="jacascript:;" onClick={this.link_2.bind(this)}>下拉菜单项 2</a>
+                                    <a href="jacascript:;" onClick={this.link_3.bind(this)}>下拉菜单项 3</a>
+                                </div>
+                            </div>
+                        </div> */}
             <div ref={(node: HTMLDivElement) => { this.btn_map = node }} id="btn-map" className="btn">{onMap}</div>
             <div ref={(node: HTMLDivElement) => { this.btn_zoomin = node }} id="btn-zoomin" className="btn">+</div>
             <div ref={(node: HTMLDivElement) => { this.btn_zoomout = node }} id="btn-zoomout" className="btn">-</div>
+            <div ref={(node: HTMLDivElement) => { this.btn_fullscreen = node }} id="btn-fullscreen" className="btn">全屏</div>
             <div className="paper-container" ref={(node: HTMLDivElement) => { this.paperContainer = node }} >
             </div>
             {this.renderMap()}

@@ -1,5 +1,6 @@
 /// <reference types="react" />
 import * as React from 'react';
+import './fullscreen';
 export interface MainProps {
     animate?: boolean;
     width?: any;
@@ -17,19 +18,15 @@ export interface MainProps {
 }
 export default class Main extends React.Component<MainProps, any> {
     paperContainer: HTMLDivElement;
-    btn_function_1: HTMLDivElement;
-    btn_function_2: HTMLDivElement;
-    btn_function_3: HTMLDivElement;
-    btn_function_4: HTMLDivElement;
     btn_more: HTMLDivElement;
     btn_zoomin: HTMLDivElement;
     btn_map: HTMLDivElement;
     btn_zoomout: HTMLDivElement;
     navigator: HTMLDivElement;
+    btn_fullscreen: HTMLDivElement;
     graph: joint.dia.Graph;
     commandManager: joint.dia.CommandManager;
     paper: joint.dia.Paper;
-    snaplines: joint.ui.Snaplines;
     paperScroller: joint.ui.PaperScroller;
     static defaultProps: MainProps;
     /**
@@ -52,6 +49,7 @@ export default class Main extends React.Component<MainProps, any> {
     renderLinks_2(): void;
     zoomIn(): void;
     zoomOut(): void;
+    full(): void;
     constructor(props: MainProps);
     componentWillMount(): void;
     componentDidMount(): void;
