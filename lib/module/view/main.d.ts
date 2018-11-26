@@ -1,6 +1,4 @@
-/// <reference types="react" />
 import * as React from 'react';
-import './fullscreen';
 export interface MainProps {
     animate?: boolean;
     width?: any;
@@ -9,12 +7,13 @@ export interface MainProps {
     rankDir?: 'TB' | 'BT' | 'LR' | 'RL';
     onDblclick?: Function;
     data: any;
-    images: any;
+    nodeId?: string;
     center?: boolean;
     zoomToFit?: boolean;
     paper_width?: number;
     paper_height?: number;
     cid?: string;
+    fullscreen_btn_disable?: boolean;
 }
 export default class Main extends React.Component<MainProps, any> {
     paperContainer: HTMLDivElement;
@@ -22,12 +21,13 @@ export default class Main extends React.Component<MainProps, any> {
     btn_zoomin: HTMLDivElement;
     btn_map: HTMLDivElement;
     btn_zoomout: HTMLDivElement;
-    navigator: HTMLDivElement;
+    navi: HTMLDivElement;
     btn_fullscreen: HTMLDivElement;
     graph: joint.dia.Graph;
     commandManager: joint.dia.CommandManager;
     paper: joint.dia.Paper;
     paperScroller: joint.ui.PaperScroller;
+    navigator: joint.ui.Navigator;
     static defaultProps: MainProps;
     /**
      * 数据传递动画
@@ -37,25 +37,22 @@ export default class Main extends React.Component<MainProps, any> {
      * 数据解析
      * @param data 拓扑数据
      */
-    parseData(data: any, images: any): void;
+    parseData(data: any, nodeId: any): void;
     initializePaper(): void;
-    initializeNavigator(): void;
     small_map(): void;
-    function_1(): void;
-    function_2(): void;
-    function_3(): void;
-    function_4(): void;
+    fullScreen: () => void;
+    requestFullScreen: () => void;
+    exitFullscreen: () => void;
+    watchFullScreen: () => void;
     renderLayout(): void;
     renderLinks_2(): void;
+    renderLinks_3(): void;
     zoomIn(): void;
     zoomOut(): void;
-    full(): void;
     constructor(props: MainProps);
     componentWillMount(): void;
     componentDidMount(): void;
     renderMap(): JSX.Element;
-    link_1(): void;
-    link_2(): void;
-    link_3(): void;
+    renderFullscreenBtn(): JSX.Element;
     render(): JSX.Element;
 }

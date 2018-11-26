@@ -4,23 +4,18 @@ export interface IlinkOption {
     state?: number;
     source?: string;
     target?: string;
-    type?: number;
+    linkType?: number;
+    arrowType?: number;
 }
 declare let linkOption: (opt: IlinkOption) => any;
 export interface IvimOption {
     id?: string;
-    desc?: string;
-    label?: string;
-    state?: number;
+    name?: string;
+    status?: string;
     type?: string;
-    bizFields?: any;
-    isHighlight?: boolean;
-    switch?: any;
-    vm?: any;
-    vnf?: any;
-    vnfc?: any;
-    server?: any;
-    logo_y?: any;
+    alarm?: number;
+    displayType?: any;
+    nodeId?: string;
 }
 declare let vimOption: (opt: IvimOption) => any;
 export { VIM, vimOption, Link, linkOption };

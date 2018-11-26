@@ -11,7 +11,6 @@ const init = (mountNodeId = 'root', opt: any) => {
       animate={opt.animate}
       cid={opt.cid}
       data={opt.data}
-      images={opt.images}
       onDblclick={opt.onDblclick}
       width={opt.width}
       height={opt.height}
