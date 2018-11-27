@@ -34,6 +34,7 @@ export default class Main extends React.Component<MainProps, any> {
 
     // rappid things
     graph: joint.dia.Graph;
+    graph2: joint.dia.Graph;
     commandManager: joint.dia.CommandManager;
     paper: joint.dia.Paper;
     paperScroller: joint.ui.PaperScroller;
@@ -45,7 +46,7 @@ export default class Main extends React.Component<MainProps, any> {
         paper_width: 1000,
         paper_height: 1000,
         drawGrid: false,
-        rankDir: 'LR',
+        rankDir: 'RL',
         data: {},
         nodeId: '',
         center: false,
@@ -115,11 +116,11 @@ export default class Main extends React.Component<MainProps, any> {
                 let opt = {
                     isHighlight: (node.id === this.props.cid)
                 }
-                new VIM(vimOption(_.merge(node, opt, { nodeId }))).addTo(this.graph)
+                new VIM(vimOption(_.merge(node, opt, { nodeId }))).addTo(this.graph2)
             })
             if (data.links2) {
                 _.map(data.links2, (link) => {
-                    new Link(linkOption(link)).addTo(this.graph)
+                    new Link(linkOption(link)).addTo(this.graph2)
                 })
             }
         }
@@ -129,7 +130,8 @@ export default class Main extends React.Component<MainProps, any> {
     */
     initializePaper() {
         const graph = this.graph = new joint.dia.Graph;
-        this.commandManager = new joint.dia.CommandManager({ graph: graph });
+        const graph2 = this.graph2 = new joint.dia.Graph;
+        this.commandManager = new joint.dia.CommandManager({ graph: graph, graph2: graph2 });
         const paper = this.paper = new joint.dia.Paper({
             width: this.props.paper_width,
             height: this.props.paper_height,
@@ -151,6 +153,7 @@ export default class Main extends React.Component<MainProps, any> {
         paper.on('blank:pointerdown', paperScroller.startPanning);
         $(this.paperContainer).append(paperScroller.el);
         this.renderLayout()
+        this.renderLayout2()
         // this.renderLinks_2()
         this.renderLinks_3()
         paperScroller.render();
@@ -310,6 +313,16 @@ export default class Main extends React.Component<MainProps, any> {
             marginY: 100,
             rankSep: 80,
             rankDir: 'LR'
+        });
+    }
+    renderLayout2() {
+        let graphBBox = joint.layout.DirectedGraph.layout(this.graph2, {
+            nodeSep: 50,
+            edgeSep: 80,
+            marginX: 100,
+            marginY: 100,
+            rankSep: 80,
+            rankDir: 'RL'
         });
     }
     /*

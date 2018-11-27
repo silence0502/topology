@@ -24,6 +24,7 @@ export default class Main extends React.Component<MainProps, any> {
     navi: HTMLDivElement;
     btn_fullscreen: HTMLDivElement;
     graph: joint.dia.Graph;
+    graph2: joint.dia.Graph;
     commandManager: joint.dia.CommandManager;
     paper: joint.dia.Paper;
     paperScroller: joint.ui.PaperScroller;
@@ -45,6 +46,7 @@ export default class Main extends React.Component<MainProps, any> {
     exitFullscreen: () => void;
     watchFullScreen: () => void;
     renderLayout(): void;
+    renderLayout2(): void;
     renderLinks_2(): void;
     renderLinks_3(): void;
     zoomIn(): void;
