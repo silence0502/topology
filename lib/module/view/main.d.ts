@@ -46,7 +46,6 @@ export default class Main extends React.Component<MainProps, any> {
     exitFullscreen: () => void;
     watchFullScreen: () => void;
     renderLayout(): void;
-    renderLayout2(): void;
     renderLinks_2(): void;
     renderLinks_3(): void;
     zoomIn(): void;

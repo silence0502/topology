@@ -14,6 +14,7 @@ export interface IvimOption {
     status?: string;
     type?: string;
     alarm?: number;
+    demo?: number;
     displayType?: any;
     nodeId?: string;
 }

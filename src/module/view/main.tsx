@@ -116,11 +116,11 @@ export default class Main extends React.Component<MainProps, any> {
                 let opt = {
                     isHighlight: (node.id === this.props.cid)
                 }
-                new VIM(vimOption(_.merge(node, opt, { nodeId }))).addTo(this.graph2)
+                new VIM(vimOption(_.merge(node, opt, { nodeId }))).addTo(this.graph)
             })
             if (data.links2) {
                 _.map(data.links2, (link) => {
-                    new Link(linkOption(link)).addTo(this.graph2)
+                    new Link(linkOption(link)).addTo(this.graph)
                 })
             }
         }
@@ -130,8 +130,7 @@ export default class Main extends React.Component<MainProps, any> {
     */
     initializePaper() {
         const graph = this.graph = new joint.dia.Graph;
-        const graph2 = this.graph2 = new joint.dia.Graph;
-        this.commandManager = new joint.dia.CommandManager({ graph: graph, graph2: graph2 });
+        this.commandManager = new joint.dia.CommandManager({ graph: graph });
         const paper = this.paper = new joint.dia.Paper({
             width: this.props.paper_width,
             height: this.props.paper_height,
@@ -153,7 +152,6 @@ export default class Main extends React.Component<MainProps, any> {
         paper.on('blank:pointerdown', paperScroller.startPanning);
         $(this.paperContainer).append(paperScroller.el);
         this.renderLayout()
-        this.renderLayout2()
         // this.renderLinks_2()
         this.renderLinks_3()
         paperScroller.render();
@@ -185,6 +183,12 @@ export default class Main extends React.Component<MainProps, any> {
             if (this.props.onDblclick) {
                 this.props.onDblclick(cellView)
             }
+        });
+        paper.on('cell:pointerclick', (cellView: any) => {
+            console.log(cellView);
+            // if (this.props.onDblclick) {
+            //     this.props.onDblclick(cellView)
+            // }
         });
         /*
          * 解决全屏不显示tooltip
@@ -315,16 +319,6 @@ export default class Main extends React.Component<MainProps, any> {
             rankDir: 'LR'
         });
     }
-    renderLayout2() {
-        let graphBBox = joint.layout.DirectedGraph.layout(this.graph2, {
-            nodeSep: 50,
-            edgeSep: 80,
-            marginX: 100,
-            marginY: 100,
-            rankSep: 80,
-            rankDir: 'RL'
-        });
-    }
     /*
      * 布局后的连线
      */
@@ -382,23 +376,23 @@ export default class Main extends React.Component<MainProps, any> {
         }
     }
     render() {
-      let onMap = this.state.visable_instance === true ? '关闭缩略图' : '打开缩略图'
-      return (
-          <div>
-              <div className="topology_instance" id="topology_instance" style={{ width: window.innerWidth, height: window.innerHeight }}>
-                  <div className="topology-app" >
-                      <div className="app-body">
-                          {this.renderFullscreenBtn()}
-                          <div ref={(node: HTMLDivElement) => { this.btn_map = node }} id="btn-map" className="btn">{onMap}</div>
-                          <div ref={(node: HTMLDivElement) => { this.btn_zoomin = node }} id="btn-zoomin" className="btn">+</div>
-                          <div ref={(node: HTMLDivElement) => { this.btn_zoomout = node }} id="btn-zoomout" className="btn">-</div>
-                          <div className="paper-container" ref={(node: HTMLDivElement) => { this.paperContainer = node }} >
-                          </div>
-                          {this.renderMap()}
-                      </div>
-                  </div>
-              </div>
-          </div>
-      );
-  }
+        let onMap = this.state.visable_instance === true ? '关闭缩略图' : '打开缩略图'
+        return (
+            <div>
+                <div className="topology_instance" id="topology_instance" style={{ width: window.innerWidth, height: window.innerHeight }}>
+                    <div className="topology-app" >
+                        <div className="app-body">
+                            {this.renderFullscreenBtn()}
+                            <div ref={(node: HTMLDivElement) => { this.btn_map = node }} id="btn-map" className="btn">{onMap}</div>
+                            <div ref={(node: HTMLDivElement) => { this.btn_zoomin = node }} id="btn-zoomin" className="btn">+</div>
+                            <div ref={(node: HTMLDivElement) => { this.btn_zoomout = node }} id="btn-zoomout" className="btn">-</div>
+                            <div className="paper-container" ref={(node: HTMLDivElement) => { this.paperContainer = node }} >
+                            </div>
+                            {this.renderMap()}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 }

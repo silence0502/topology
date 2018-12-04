@@ -3,7 +3,7 @@ declare const joint: any
 import _ from 'lodash';
 
 let VIM = joint.shapes.basic.Generic.extend({
-    markup: '<g class="rotatable"><rect class="body"/><rect class="card"/><rect class="alarm"/><text class="label"/><text class="type"/></g>',
+    markup: '<g class="rotatable"><rect class="body"/><rect class="card"/><rect class="alarm"/><rect class="demo"/><text class="label"/><text class="type"/></g>',
     defaults: _.defaultsDeep({
         type: 'VIM',
         size: {
@@ -32,11 +32,19 @@ let VIM = joint.shapes.basic.Generic.extend({
             },
             '.alarm': {
                 refX: '100%',
-                refX2: -16,
+                refX2: -11,
                 refY: '100%',
-                refY2: -16,
-                width: 15,
-                height: 15,
+                refY2: -11,
+                width: 10,
+                height: 10,
+            },
+            '.demo': {
+                refX: '100%',
+                refX2: -11,
+                refY: '100%',
+                refY2: -29,
+                width: 10,
+                height: 10,
             },
             '.logo': {
                 x: -1,
@@ -201,6 +209,7 @@ export interface IvimOption {
     status?: string
     type?: string
     alarm?: number
+    demo?: number
     displayType?: any
     nodeId?: string
 }
@@ -221,7 +230,7 @@ let getNewString = (str: any) => {
     return b;
 }
 let vimOption = (opt: IvimOption) => {
-    let option: any = { size: {}, attrs: { '.label': {}, '.type': {}, '.alarm': {}, '.logo': {}, '.body': {} } }
+    let option: any = { size: {}, attrs: { '.label': {}, '.type': {}, '.alarm': {}, '.demo': {}, '.logo': {}, '.body': {} } }
     let dataTooltip = ''
     let byName = ''
     let dataIcon = ''
@@ -260,10 +269,25 @@ let vimOption = (opt: IvimOption) => {
             option.markup = `<g class="rotatable" ${dataTooltip} ${byName}>
             <rect class="body"/><rect class="logo" />
             <image ${dataIcon} x="1" y="1" height="28px" width="28px"/><rect class="card"/>
-            <rect class="alarm"/><text class="label"/><text class="type"/></g>`
+            <rect class="alarm"/><rect class="demo"/><text class="label"/><text class="type"/></g>`
         }
         if (opt.name) {
             option.attrs['.label'].text = getNewString(opt.name)
+        }
+        if (opt.demo) {
+            switch (opt.demo) {
+                case 0:
+                    option.attrs['.demo'].width = 0
+                    option.attrs['.demo'].height = 0
+                    break;
+                case 1:
+                    option.attrs['.demo'].fill = '#FF9901'
+                    break;
+                default:
+                    option.attrs['.demo'].width = 0
+                    option.attrs['.demo'].height = 0
+                    break;
+            }
         }
         /*元件的告警*/
         switch (opt.alarm) {
