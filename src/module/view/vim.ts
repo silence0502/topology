@@ -171,7 +171,7 @@ let linkOption = (opt: IlinkOption) => {
                 break;
             default:
                 option.attrs['.connection']['stroke-width'] = 3;
-                option.router.name = 'manhattan';
+                // option.router.name = 'manhattan';
                 break;
         }
         /*箭头类型*/
@@ -210,6 +210,8 @@ export interface IvimOption {
     type?: string
     alarm?: number
     demo?: number
+    x?: number
+    y?: number
     displayType?: any
     nodeId?: string
 }
@@ -230,13 +232,22 @@ let getNewString = (str: any) => {
     return b;
 }
 let vimOption = (opt: IvimOption) => {
-    let option: any = { size: {}, attrs: { '.label': {}, '.type': {}, '.alarm': {}, '.demo': {}, '.logo': {}, '.body': {} } }
+    let option: any = {
+        position: {},
+        size: {},
+        attrs: {
+            '.label': {}, '.type': {}, '.alarm': {}, '.demo': {}, '.logo': {}, '.body': {}
+        }
+    }
     let dataTooltip = ''
     let byName = ''
     let dataIcon = ''
     if (opt) {
         if (opt.id) {
             option.id = opt.id
+        }
+        if (opt.x && opt.y) {
+            option.position = { x: opt.x, y: opt.y }
         }
         /*当前图标高亮*/
         if (opt.id === opt.nodeId) {

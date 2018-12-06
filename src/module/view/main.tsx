@@ -105,24 +105,6 @@ export default class Main extends React.Component<MainProps, any> {
                 }
                 new VIM(vimOption(_.merge(node, opt, { nodeId }))).addTo(this.graph)
             })
-            if (data.links) {
-                _.map(data.links, (link) => {
-                    new Link(linkOption(link)).addTo(this.graph)
-                })
-            }
-        }
-        if (data.nodes2) {
-            _.map(data.nodes2, (node: any) => {
-                let opt = {
-                    isHighlight: (node.id === this.props.cid)
-                }
-                new VIM(vimOption(_.merge(node, opt, { nodeId }))).addTo(this.graph)
-            })
-            if (data.links2) {
-                _.map(data.links2, (link) => {
-                    new Link(linkOption(link)).addTo(this.graph)
-                })
-            }
         }
     }
     /*
@@ -151,9 +133,9 @@ export default class Main extends React.Component<MainProps, any> {
         });
         paper.on('blank:pointerdown', paperScroller.startPanning);
         $(this.paperContainer).append(paperScroller.el);
-        this.renderLayout()
-        // this.renderLinks_2()
-        this.renderLinks_3()
+        // this.renderLayout()
+        this.renderLinks()
+        this.renderLinks_2()
         paperScroller.render();
         if (this.props.center) { paperScroller.center() }
         if (this.props.zoomToFit) { paperScroller.zoomToFit() }
@@ -322,17 +304,17 @@ export default class Main extends React.Component<MainProps, any> {
     /*
      * 布局后的连线
      */
+    renderLinks() {
+        if (this.props.data.links) {
+            _.map(this.props.data.links, (link) => {
+                new Link(linkOption(link)).addTo(this.graph)
+            })
+        }
+    }
     renderLinks_2() {
         if (this.props.data.links2) {
             _.map(this.props.data.links2, (link2) => {
                 new Link(linkOption(link2)).addTo(this.graph)
-            })
-        }
-    }
-    renderLinks_3() {
-        if (this.props.data.links3) {
-            _.map(this.props.data.links3, (link3) => {
-                new Link(linkOption(link3)).addTo(this.graph)
             })
         }
     }
