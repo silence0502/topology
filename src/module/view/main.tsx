@@ -162,18 +162,24 @@ export default class Main extends React.Component<MainProps, any> {
          * 双击事件
          */
         paper.on('cell:pointerdblclick', (cellView: any) => {
-            // if (this.props.onDblclick) {
-            //     this.props.onDblclick(cellView)
-            // }
+            if (cellView.model.attributes.type === 'VIM') {
+                if (this.props.onDblclick) {
+                    this.props.onDblclick(cellView)
+                }
+            }
         });
-        paper.on('cell:pointerclick', (cellView: any, evt: any, x: number, y: number) => {
-            let multiple = paperScroller.zoom()
-            if (evt.offsetX / multiple - cellView.model.attributes.position.x >= 170) {
-                // console.log('right');
-                if (evt.offsetY / multiple - cellView.model.attributes.position.y <= 10) {
-                    // console.log('top');
-                } else if (evt.offsetY / multiple - cellView.model.attributes.position.y >= 20) {
-                    // console.log('bottom');
+        /*
+         * 单击事件
+         */
+        paper.on('cell:pointerclick', (cellView: any, evt: any) => {
+            if (cellView.model.attributes.type === 'VIM') {
+                let multiple = paperScroller.zoom()
+                if (evt.offsetX / multiple - cellView.model.attributes.position.x >= 169) {
+                    if (evt.offsetY / multiple - cellView.model.attributes.position.y <= 11) {
+                        console.log('top');
+                    } else if (evt.offsetY / multiple - cellView.model.attributes.position.y >= 19) {
+                        console.log('bottom');
+                    }
                 }
             }
         });
@@ -294,7 +300,7 @@ export default class Main extends React.Component<MainProps, any> {
         );
     }
     /*
-     * 布局切换
+     * 自动布局 
      */
     renderLayout() {
         let graphBBox = joint.layout.DirectedGraph.layout(this.graph, {
@@ -373,8 +379,7 @@ export default class Main extends React.Component<MainProps, any> {
                             <div ref={(node: HTMLDivElement) => { this.btn_map = node }} id="btn-map" className="btn">{onMap}</div>
                             <div ref={(node: HTMLDivElement) => { this.btn_zoomin = node }} id="btn-zoomin" className="btn">+</div>
                             <div ref={(node: HTMLDivElement) => { this.btn_zoomout = node }} id="btn-zoomout" className="btn">-</div>
-                            <div className="paper-container" ref={(node: HTMLDivElement) => { this.paperContainer = node }} >
-                            </div>
+                            <div className="paper-container" ref={(node: HTMLDivElement) => { this.paperContainer = node }} ></div>
                             {this.renderMap()}
                         </div>
                     </div>
