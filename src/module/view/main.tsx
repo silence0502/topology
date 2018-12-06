@@ -162,15 +162,20 @@ export default class Main extends React.Component<MainProps, any> {
          * 双击事件
          */
         paper.on('cell:pointerdblclick', (cellView: any) => {
-            if (this.props.onDblclick) {
-                this.props.onDblclick(cellView)
-            }
-        });
-        paper.on('cell:pointerclick', (cellView: any) => {
-            console.log(cellView);
             // if (this.props.onDblclick) {
             //     this.props.onDblclick(cellView)
             // }
+        });
+        paper.on('cell:pointerclick', (cellView: any, evt: any, x: number, y: number) => {
+            let multiple = paperScroller.zoom()
+            if (evt.offsetX / multiple - cellView.model.attributes.position.x >= 170) {
+                // console.log('right');
+                if (evt.offsetY / multiple - cellView.model.attributes.position.y <= 10) {
+                    // console.log('top');
+                } else if (evt.offsetY / multiple - cellView.model.attributes.position.y >= 20) {
+                    // console.log('bottom');
+                }
+            }
         });
         /*
          * 解决全屏不显示tooltip
