@@ -121,6 +121,7 @@ export default class Main extends React.Component<MainProps, any> {
             model: graph,
             perpendicularLinks: true,
             restrictTranslate: true,
+            interactive: false, /*是否可以拖动*/
         });
         this.parseData(this.props.data, this.props.nodeId)
         if (this.props.animate) {
@@ -144,6 +145,10 @@ export default class Main extends React.Component<MainProps, any> {
          */
         let tool_tip = new joint.ui.Tooltip({
             target: '[data-tooltip]',
+            position: (target: any) => {
+                let align = _.split(target.attributes['name'].nodeValue, '|')
+                return align[0] === 'left' ? 'left' : 'right'
+            },
             content: (target: any) => {
                 let tips = _.split(target.attributes['data-tooltip'].nodeValue, '|')
                 return _.map(tips, (item, index) => {

@@ -14,7 +14,8 @@ export interface IvimOption {
     status?: string;
     type?: string;
     alarm?: number;
-    demo?: number;
+    align?: string;
+    perf?: number;
     x?: number;
     y?: number;
     displayType?: any;

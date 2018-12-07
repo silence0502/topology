@@ -3,7 +3,7 @@ declare const joint: any
 import _ from 'lodash';
 
 let VIM = joint.shapes.basic.Generic.extend({
-    markup: '<g class="rotatable"><rect class="body"/><rect class="card"/><rect class="alarm"/><rect class="demo"/><text class="label"/><text class="type"/></g>',
+    markup: '<g class="rotatable"><rect class="body"/><rect class="card"/><rect class="alarm"/><rect class="perf"/><text class="label"/><text class="type"/></g>',
     defaults: _.defaultsDeep({
         type: 'VIM',
         size: {
@@ -31,20 +31,16 @@ let VIM = joint.shapes.basic.Generic.extend({
                 fill: '#000'
             },
             '.alarm': {
-                refX: '100%',
-                refX2: -11,
-                refY: '100%',
-                refY2: -11,
+                x: 1,
+                y: 19,
                 'rx': '2px',
                 'ry': '2px',
                 width: 10,
                 height: 10,
             },
-            '.demo': {
-                refX: '100%',
-                refX2: -11,
-                refY: '100%',
-                refY2: -29,
+            '.perf': {
+                x: 1,
+                y: 1,
                 'rx': '2px',
                 'ry': '2px',
                 width: 10,
@@ -114,7 +110,9 @@ let linkOption = (opt: IlinkOption) => {
             },
         },
         router: {
-            name: 'normal'
+            name: 'normal',
+            startDirections: ['left', 'right'],
+            endDirections: ['left', 'right'],
         },
         connector: {
             name: 'normal'
@@ -175,7 +173,7 @@ let linkOption = (opt: IlinkOption) => {
                 break;
             default:
                 option.attrs['.connection']['stroke-width'] = 3;
-                // option.router.name = 'manhattan';
+                option.router.name = 'manhattan';
                 break;
         }
         /*箭头类型*/
@@ -213,7 +211,8 @@ export interface IvimOption {
     status?: string
     type?: string
     alarm?: number
-    demo?: number
+    align?: string
+    perf?: number
     x?: number
     y?: number
     displayType?: any
@@ -240,12 +239,13 @@ let vimOption = (opt: IvimOption) => {
         position: {},
         size: {},
         attrs: {
-            '.label': {}, '.type': {}, '.alarm': {}, '.demo': {}, '.logo': {}, '.body': {}
+            '.label': {}, '.type': {}, '.alarm': {}, '.perf': {}, '.logo': {}, '.body': {}
         }
     }
     let dataTooltip = ''
-    let byName = ''
+    let align = ''
     let dataIcon = ''
+    let logoX = ''
     if (opt) {
         if (opt.id) {
             option.id = opt.id
@@ -277,30 +277,52 @@ let vimOption = (opt: IvimOption) => {
                     break;
             }
         }
+        /*元素位置*/
+        if (opt.align) {
+            align = `name="${opt.align}"`
+            switch (opt.align) {
+                case 'left':
+                    option.attrs['.logo'].x = 0
+                    option.attrs['.perf'].x = 169
+                    option.attrs['.alarm'].x = 169
+                    option.attrs['.label']['ref-x'] = .58
+                    logoX = `x='1'`
+                    break;
+                case 'right':
+                    option.attrs['.logo'].x = 150
+                    option.attrs['.perf'].x = 1
+                    option.attrs['.alarm'].x = 1
+                    option.attrs['.label']['ref-x'] = .41
+                    logoX = `x='151'`
+                    break;
+                default:
+                    option.attrs['.logo'].x = 0
+                    break;
+            }
+        }
         /*元件的SVG*/
         if (opt.name) {
             dataTooltip = `data-tooltip="${opt.name}"`
-            byName = `name="tooltips"`
-            option.markup = `<g class="rotatable" ${dataTooltip} ${byName}>
+            option.markup = `<g class="rotatable" ${dataTooltip} ${align}>
             <rect class="body"/><rect class="logo" />
-            <image ${dataIcon} x="1" y="1" height="28px" width="28px"/><rect class="card"/>
-            <rect class="alarm"/><rect class="demo"/><text class="label"/><text class="type"/></g>`
+            <image ${dataIcon} ${logoX} y="1" height="28px" width="28px"/><rect class="card"/>
+            <rect class="alarm"/><rect class="perf"/><text class="label"/><text class="type"/></g>`
         }
         if (opt.name) {
             option.attrs['.label'].text = getNewString(opt.name)
         }
-        if (opt.demo) {
-            switch (opt.demo) {
+        if (opt.perf) {
+            switch (opt.perf) {
                 case 0:
-                    option.attrs['.demo'].width = 0
-                    option.attrs['.demo'].height = 0
+                    option.attrs['.perf'].width = 0
+                    option.attrs['.perf'].height = 0
                     break;
                 case 1:
-                    option.attrs['.demo'].fill = '#FF9901'
+                    option.attrs['.perf'].fill = '#FF9901'
                     break;
                 default:
-                    option.attrs['.demo'].width = 0
-                    option.attrs['.demo'].height = 0
+                    option.attrs['.perf'].width = 0
+                    option.attrs['.perf'].height = 0
                     break;
             }
         }
