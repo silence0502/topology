@@ -228,7 +228,7 @@ let getNewString = (str: any) => {
         } else {
             realLength += 2;
         }
-        if (realLength <= 20) {
+        if (realLength <= 18) {
             b = b + str.charAt(i);
         };
     }
