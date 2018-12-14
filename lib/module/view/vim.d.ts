@@ -2,8 +2,10 @@ declare let VIM: any;
 declare let Link: any;
 export interface IlinkOption {
     state?: number;
-    source?: string;
-    target?: string;
+    source?: any;
+    target?: any;
+    sourceObj?: any;
+    targetObj?: any;
     linkType?: number;
     arrowType?: number;
 }

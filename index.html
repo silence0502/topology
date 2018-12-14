@@ -34,7 +34,7 @@
   <script type="text/javascript" src="sd_topo_layout.js"></script>
   <script type="text/javascript" src="sd_topo_data.js"></script>
   <script>
-    doSDTopoLayout(topoData, 50, 1500, 100, 100, 150, 50);
+    doSDTopoLayout(topoData, 0, 0, 0, 150, 50);
     topology_instance.init('root', {
       rankDir: 'TB',
       animate: false,
@@ -43,7 +43,7 @@
       data: topoData,
       cid: '',
       onDblclick: function (cell) {
-        // console.log(cell);
+        console.log(cell);
       },
     })
   </script>

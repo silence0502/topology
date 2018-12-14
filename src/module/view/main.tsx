@@ -179,11 +179,34 @@ export default class Main extends React.Component<MainProps, any> {
         paper.on('cell:pointerclick', (cellView: any, evt: any) => {
             if (cellView.model.attributes.type === 'VIM') {
                 let multiple = paperScroller.zoom()
-                if (evt.offsetX / multiple - cellView.model.attributes.position.x >= 169) {
-                    if (evt.offsetY / multiple - cellView.model.attributes.position.y <= 11) {
-                        console.log('top');
-                    } else if (evt.offsetY / multiple - cellView.model.attributes.position.y >= 19) {
-                        console.log('bottom');
+                if (cellView.model.attributes.attrs['.perf'].width > 0) {
+                    if (cellView.model.attributes.attrs['.perf'].x === 1) {
+                        if (evt.offsetX / multiple - cellView.model.attributes.position.x <= 11) {
+                            if (evt.offsetY / multiple - cellView.model.attributes.position.y <= 11) {
+                                console.log('top');
+                            }
+                        }
+                    } else if (cellView.model.attributes.attrs['.perf'].x === 169) {
+                        if (evt.offsetX / multiple - cellView.model.attributes.position.x >= 169) {
+                            if (evt.offsetY / multiple - cellView.model.attributes.position.y <= 11) {
+                                console.log('top');
+                            }
+                        }
+                    }
+                }
+                if (cellView.model.attributes.attrs['.alarm'].width > 0) {
+                    if (cellView.model.attributes.attrs['.alarm'].x === 1) {
+                        if (evt.offsetX / multiple - cellView.model.attributes.position.x <= 11) {
+                            if (evt.offsetY / multiple - cellView.model.attributes.position.y >= 19) {
+                                console.log('bottom');
+                            }
+                        }
+                    } else if (cellView.model.attributes.attrs['.alarm'].x === 169) {
+                        if (evt.offsetX / multiple - cellView.model.attributes.position.x >= 169) {
+                            if (evt.offsetY / multiple - cellView.model.attributes.position.y >= 19) {
+                                console.log('bottom');
+                            }
+                        }
                     }
                 }
             }
@@ -377,7 +400,11 @@ export default class Main extends React.Component<MainProps, any> {
         let onMap = this.state.visable_instance === true ? '关闭缩略图' : '打开缩略图'
         return (
             <div>
-                <div className="topology_instance" id="topology_instance" style={{ width: window.innerWidth, height: window.innerHeight }}>
+                <div className="topology_instance" id="topology_instance"
+                    style={{
+                        width: window.innerWidth,
+                        height: window.innerHeight
+                    }}>
                     <div className="topology-app" >
                         <div className="app-body">
                             {this.renderFullscreenBtn()}

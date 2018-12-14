@@ -35,16 +35,16 @@ let VIM = joint.shapes.basic.Generic.extend({
                 y: 19,
                 'rx': '2px',
                 'ry': '2px',
-                width: 10,
-                height: 10,
+                width: 0,
+                height: 0,
             },
             '.perf': {
                 x: 1,
                 y: 1,
                 'rx': '2px',
                 'ry': '2px',
-                width: 10,
-                height: 10,
+                width: 0,
+                height: 0,
             },
             '.logo': {
                 x: 0,
@@ -78,6 +78,8 @@ let Link = joint.dia.Link.extend({
             '.connection': { stroke: '#C6C9CA', 'stroke-width': 1 },
             '.link-tools': { display: 'none' },
             '.marker-arrowheads': { display: 'none' },
+            '.marker-vertex': { display: 'none' },
+            '.marker-vertices': { display: 'none' }
         },
         z: -1
     }, joint.dia.Link.prototype.defaults),
@@ -91,8 +93,10 @@ let Link = joint.dia.Link.extend({
 */
 export interface IlinkOption {
     state?: number
-    source?: string
-    target?: string
+    source?: any
+    target?: any
+    sourceObj?: any
+    targetObj?: any
     linkType?: number
     arrowType?: number
 }
@@ -107,23 +111,82 @@ let linkOption = (opt: IlinkOption) => {
                 stroke: '#C6C9CA', // 箭头边框
                 fill: '#C6C9CA', // 箭头颜色
                 d: 'M 10 0 L 0 5 L 10 10 z' // 箭头样式
-            },
+            }
+        },
+        position: {
+
         },
         router: {
             name: 'normal',
-            startDirections: ['left', 'right'],
-            endDirections: ['left', 'right'],
         },
         connector: {
             name: 'normal'
         }
     }
     if (opt) {
-        option.source = {
-            id: opt.source
-        }
-        option.target = {
-            id: opt.target
+        if (opt.linkType === 1) {
+            option.source = {
+                x: opt.sourceObj.x + 90,
+                y: opt.sourceObj.y + 30,
+            }
+            if (opt.targetObj.align === 'left') {
+                option.target = {
+                    x: opt.targetObj.x,
+                    y: opt.targetObj.y + 20,
+                }
+            } else {
+                option.target = {
+                    x: opt.targetObj.x + 180,
+                    y: opt.targetObj.y + 20,
+                }
+            }
+            // option.source = { id: opt.source }
+            // option.target = { id: opt.target }
+        } else if (opt.linkType === 0) {
+            if (opt.sourceObj.align === 'left') {
+                option.source = {
+                    x: opt.sourceObj.x + 180,
+                    y: opt.sourceObj.y + 15,
+                }
+                if (opt.targetObj.align === 'left') {
+                    option.target = {
+                        x: opt.targetObj.x + 180,
+                        y: opt.targetObj.y + 15,
+                    }
+                    if (opt.sourceObj.x >= opt.targetObj.x) {
+                        option.vertices = [{ x: opt.sourceObj.x + 230, y: (opt.sourceObj.y + opt.targetObj.y) / 2 }]
+                    } else {
+                        option.vertices = [{ x: opt.targetObj.x + 230, y: (opt.sourceObj.y + opt.targetObj.y) / 2 }]
+                    }
+                } else {
+                    option.target = {
+                        x: opt.targetObj.x,
+                        y: opt.targetObj.y + 15,
+                    }
+                }
+            } else {
+                option.source = {
+                    x: opt.sourceObj.x,
+                    y: opt.sourceObj.y + 15,
+                }
+                if (opt.targetObj.align === 'left') {
+                    option.target = {
+                        x: opt.targetObj.x + 180,
+                        y: opt.targetObj.y + 15,
+                    }
+                } else {
+                    option.target = {
+                        x: opt.targetObj.x,
+                        y: opt.targetObj.y + 15,
+                    }
+                    if (opt.sourceObj.x <= opt.targetObj.x) {
+                        option.vertices = [{ x: opt.sourceObj.x - 230, y: (opt.sourceObj.y + opt.targetObj.y) / 2 }]
+                    } else {
+                        option.vertices = [{ x: opt.targetObj.x - 230, y: (opt.sourceObj.y + opt.targetObj.y) / 2 }]
+                    }
+                }
+
+            }
         }
         option.state = opt.state
         option.linkType = opt.linkType
@@ -314,39 +377,47 @@ let vimOption = (opt: IvimOption) => {
         if (opt.perf) {
             switch (opt.perf) {
                 case 0:
-                    option.attrs['.perf'].width = 0
-                    option.attrs['.perf'].height = 0
+                    option.attrs['.perf'].width = 10
+                    option.attrs['.perf'].height = 10
+                    option.attrs['.perf'].fill = '#00b388'
                     break;
                 case 1:
+                    option.attrs['.perf'].width = 10
+                    option.attrs['.perf'].height = 10
                     option.attrs['.perf'].fill = '#FF9901'
                     break;
                 default:
-                    option.attrs['.perf'].width = 0
-                    option.attrs['.perf'].height = 0
                     break;
             }
         }
         /*元件的告警*/
         switch (opt.alarm) {
             case 0:
-                option.attrs['.alarm'].width = 0
-                option.attrs['.alarm'].height = 0
+                option.attrs['.alarm'].width = 10
+                option.attrs['.alarm'].height = 10
+                option.attrs['.alarm'].fill = '#00b388'
                 break;
             case 1:
+                option.attrs['.alarm'].width = 10
+                option.attrs['.alarm'].height = 10
                 option.attrs['.alarm'].fill = '#D10002'
                 break;
             case 2:
+                option.attrs['.alarm'].width = 10
+                option.attrs['.alarm'].height = 10
                 option.attrs['.alarm'].fill = '#FF9901'
                 break;
             case 3:
+                option.attrs['.alarm'].width = 10
+                option.attrs['.alarm'].height = 10
                 option.attrs['.alarm'].fill = '#DFB202'
                 break;
             case 4:
+                option.attrs['.alarm'].width = 10
+                option.attrs['.alarm'].height = 10
                 option.attrs['.alarm'].fill = '#00BFFF'
                 break;
             default:
-                option.attrs['.alarm'].width = 0
-                option.attrs['.alarm'].height = 0
                 break;
         }
         /*元件的背景是亮还是暗*/
