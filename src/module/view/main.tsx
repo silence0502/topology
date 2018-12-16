@@ -138,7 +138,18 @@ export default class Main extends React.Component<MainProps, any> {
         this.renderLinks()
         this.renderLinks_2()
         paperScroller.render();
-        if (this.props.center) { paperScroller.center() }
+        // if (this.props.center) { paperScroller.center() }
+        if (this.props.nodeId) {
+            let positon: any = {}
+            _.map(this.props.data.nodes, (item, index) => {
+                if (item.id === this.props.nodeId) {
+                    positon = { x: item.x, y: item.y }
+                }
+            })
+            paperScroller.center(positon.x, positon.y)
+        } else if (this.props.center) {
+            paperScroller.center()
+        }
         if (this.props.zoomToFit) { paperScroller.zoomToFit() }
         /*
          * tooltip初始化
