@@ -79,8 +79,8 @@ export default class Main extends React.Component<MainProps, any> {
         let sources: any = []
         let targets: any = []
         _.map(graph.getLinks(), (link: any) => {
-            sources.push(link.get('source').id)
-            targets.push(link.get('target').id)
+            sources.push(link.get('source'))
+            targets.push(link.get('target'))
         })
         let triggers = _.sortedUniq(_.difference(sources, targets))
         function simulate() {
@@ -97,13 +97,13 @@ export default class Main extends React.Component<MainProps, any> {
      * 数据解析
      * @param data 拓扑数据
      */
-    parseData(data: any, nodeId: any) {
+    parseData(data: any) {
         if (data.nodes) {
             _.map(data.nodes, (node: any) => {
                 let opt = {
                     isHighlight: (node.id === this.props.cid)
                 }
-                new VIM(vimOption(_.merge(node, opt, { nodeId }))).addTo(this.graph)
+                new VIM(vimOption(_.merge(node, opt))).addTo(this.graph)
             })
         }
     }
@@ -121,9 +121,9 @@ export default class Main extends React.Component<MainProps, any> {
             model: graph,
             perpendicularLinks: true,
             restrictTranslate: true,
-            interactive: false, /*是否可以拖动*/
+            // interactive: false, /*是否可以拖动*/
         });
-        this.parseData(this.props.data, this.props.nodeId)
+        this.parseData(this.props.data)
         if (this.props.animate) {
             this.doAnimate()
         }
@@ -134,9 +134,8 @@ export default class Main extends React.Component<MainProps, any> {
         });
         paper.on('blank:pointerdown', paperScroller.startPanning);
         $(this.paperContainer).append(paperScroller.el);
-        // this.renderLayout()
+        this.renderLayout()
         this.renderLinks()
-        this.renderLinks_2()
         paperScroller.render();
         // if (this.props.center) { paperScroller.center() }
         if (this.props.nodeId) {
@@ -154,26 +153,26 @@ export default class Main extends React.Component<MainProps, any> {
         /*
          * tooltip初始化
          */
-        let tool_tip = new joint.ui.Tooltip({
-            target: '[data-tooltip]',
-            position: (target: any) => {
-                let align = _.split(target.attributes['name'].nodeValue, '|')
-                return align[0] === 'left' ? 'left' : 'right'
-            },
-            content: (target: any) => {
-                let tips = _.split(target.attributes['data-tooltip'].nodeValue, '|')
-                return _.map(tips, (item, index) => {
-                    if (index === 0 && tips.length > 1) {
-                        if (tips[0] !== tips[1]) {
-                            return `<b>${item}</b><hr />`
-                        } else {
-                            return ''
-                        }
-                    }
-                    return item
-                })
-            }
-        });
+        // let tool_tip = new joint.ui.Tooltip({
+        //     target: '[data-tooltip]',
+        //     position: (target: any) => {
+        //         let align = _.split(target.attributes['name'].nodeValue, '|')
+        //         return align[0] === 'left' ? 'left' : 'right'
+        //     },
+        //     content: (target: any) => {
+        //         let tips = _.split(target.attributes['data-tooltip'].nodeValue, '|')
+        //         return _.map(tips, (item, index) => {
+        //             if (index === 0 && tips.length > 1) {
+        //                 if (tips[0] !== tips[1]) {
+        //                     return `<b>${item}</b><hr />`
+        //                 } else {
+        //                     return ''
+        //                 }
+        //             }
+        //             return item
+        //         })
+        //     }
+        // });
         /*
          * 双击事件
          */
@@ -342,7 +341,8 @@ export default class Main extends React.Component<MainProps, any> {
      * 自动布局 
      */
     renderLayout() {
-        let graphBBox = joint.layout.DirectedGraph.layout(this.graph, {
+        console.log('object');
+        var graphBBox = new joint.layout.DirectedGraph.layout(this.graph, {
             nodeSep: 50,
             edgeSep: 80,
             marginX: 100,
@@ -358,13 +358,6 @@ export default class Main extends React.Component<MainProps, any> {
         if (this.props.data.links) {
             _.map(this.props.data.links, (link) => {
                 new Link(linkOption(link)).addTo(this.graph)
-            })
-        }
-    }
-    renderLinks_2() {
-        if (this.props.data.links2) {
-            _.map(this.props.data.links2, (link2) => {
-                new Link(linkOption(link2)).addTo(this.graph)
             })
         }
     }

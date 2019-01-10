@@ -8,7 +8,7 @@ let VIM = joint.shapes.basic.Generic.extend({
         type: 'VIM',
         size: {
             width: 180,
-            height: 30
+            height: 100
         },
         attrs: {
             '.': {
@@ -105,7 +105,8 @@ let linkOption = (opt: IlinkOption) => {
         attrs: {
             '.connection': {
                 stroke: '#C6C9CA',
-                'stroke-dasharray': ''
+                'stroke-dasharray': '',
+                'stroke-width': 3
             },
             '.marker-target': {
                 stroke: '#C6C9CA', // 箭头边框
@@ -113,154 +114,60 @@ let linkOption = (opt: IlinkOption) => {
                 d: 'M 10 0 L 0 5 L 10 10 z' // 箭头样式
             }
         },
-        position: {
-
-        },
         router: {
-            name: 'normal',
+            name: 'manhattan',
         },
         connector: {
             name: 'normal'
         }
     }
     if (opt) {
-        if (opt.linkType === 1) {
-            option.source = {
-                x: opt.sourceObj.x + 90,
-                y: opt.sourceObj.y + 30,
-            }
-            if (opt.targetObj.align === 'left') {
-                option.target = {
-                    x: opt.targetObj.x,
-                    y: opt.targetObj.y + 20,
-                }
-            } else {
-                option.target = {
-                    x: opt.targetObj.x + 180,
-                    y: opt.targetObj.y + 20,
-                }
-            }
-            // option.source = { id: opt.source }
-            // option.target = { id: opt.target }
-        } else if (opt.linkType === 0) {
-            if (opt.sourceObj.align === 'left') {
-                option.source = {
-                    x: opt.sourceObj.x + 180,
-                    y: opt.sourceObj.y + 15,
-                }
-                if (opt.targetObj.align === 'left') {
-                    option.target = {
-                        x: opt.targetObj.x + 180,
-                        y: opt.targetObj.y + 15,
-                    }
-                    if (opt.sourceObj.x >= opt.targetObj.x) {
-                        option.vertices = [{ x: opt.sourceObj.x + 230, y: (opt.sourceObj.y + opt.targetObj.y) / 2 }]
-                    } else {
-                        option.vertices = [{ x: opt.targetObj.x + 230, y: (opt.sourceObj.y + opt.targetObj.y) / 2 }]
-                    }
-                } else {
-                    option.target = {
-                        x: opt.targetObj.x,
-                        y: opt.targetObj.y + 15,
-                    }
-                }
-            } else {
-                option.source = {
-                    x: opt.sourceObj.x,
-                    y: opt.sourceObj.y + 15,
-                }
-                if (opt.targetObj.align === 'left') {
-                    option.target = {
-                        x: opt.targetObj.x + 180,
-                        y: opt.targetObj.y + 15,
-                    }
-                } else {
-                    option.target = {
-                        x: opt.targetObj.x,
-                        y: opt.targetObj.y + 15,
-                    }
-                    if (opt.sourceObj.x <= opt.targetObj.x) {
-                        option.vertices = [{ x: opt.sourceObj.x - 230, y: (opt.sourceObj.y + opt.targetObj.y) / 2 }]
-                    } else {
-                        option.vertices = [{ x: opt.targetObj.x - 230, y: (opt.sourceObj.y + opt.targetObj.y) / 2 }]
-                    }
-                }
-
-            }
-        }
-        option.state = opt.state
-        option.linkType = opt.linkType
-        option.arrowType = opt.arrowType
-        /*连接线颜色*/
-        switch (option.state) {
-            case 0:
-                option.attrs['.connection'].stroke = '#C6C9CA';
-                option.attrs['.marker-target'].fill = '#C6C9CA';
-                option.attrs['.marker-target'].stroke = '#C6C9CA';
-                break;
-            case 1:
-                option.attrs['.connection'].stroke = '#D10002';
-                option.attrs['.marker-target'].fill = '#fff';
-                option.attrs['.marker-target'].stroke = '#D10002';
-                break;
-            case 2:
-                option.attrs['.connection'].stroke = '#FF9901'
-                option.attrs['.marker-target'].fill = '#FF9901';
-                option.attrs['.marker-target'].stroke = '#FF9901';
-                break;
-            case 3:
-                option.attrs['.connection'].stroke = '#DFB202'
-                option.attrs['.marker-target'].fill = '#DFB202';
-                option.attrs['.marker-target'].stroke = '#DFB202';
-                break;
-            case 4:
-                option.attrs['.connection'].stroke = '#00BFFF'
-                option.attrs['.marker-target'].fill = '#00BFFF';
-                option.attrs['.marker-target'].stroke = '#00BFFF';
-                break;
-            default:
-                option.attrs['.connection'].stroke = '#C6C9CA';
-                option.attrs['.marker-target'].fill = '#C6C9CA';
-                option.attrs['.marker-target'].stroke = '#C6C9CA';
-                break;
-        }
-        /*连接线类型*/
-        switch (option.linkType) {
-            case 1:
-                option.attrs['.connection']['stroke-width'] = 3;
-                option.router.name = 'manhattan';   // 实线
-                break;
-            case 0:
-                option.attrs['.connection']['stroke-dasharray'] = '5 3';
-                option.connector.name = 'smooth';   // 虚线
-                break;
-            default:
-                option.attrs['.connection']['stroke-width'] = 3;
-                option.router.name = 'manhattan';
-                break;
-        }
-        /*箭头类型*/
-        switch (option.arrowType) {
-            case 0:
-                option.attrs['.marker-target'].d = 'M 10 0 L 0 5 L 10 10 z';  // 三角箭头
-                break;
-            case 1:
-                option.attrs['.marker-target'].d = 'M 10 0 L 0 5 L 10 10 L 20 5 z'; // 实心菱形
-                break;
-            case 2:
-                option.attrs['.marker-target'].d = 'M 10 0 L 0 5 L 10 10 L 20 5 z'; // 空心菱形
-                option.attrs['.marker-target'].fill = '#fff';
-                break;
-            case 3:
-                option.attrs['.marker-target'].d = 'M 10 0 L 0 5 L 10 10 L 0 5 z'; // 尖箭头
-                break;
-            case 4:
-                option.attrs['.marker-target'].d = ''; // 没有箭头
-                break;
-            default:
-                option.attrs['.marker-target'].d = 'M 10 0 L 0 5 L 10 10 z';
-                break;
-        }
+        // option.source = {
+        //     x: opt.sourceObj.x + 90,
+        //     y: opt.sourceObj.y + 30,
+        // }
+        // option.target = {
+        //     x: opt.targetObj.x,
+        //     y: opt.targetObj.y + 20,
+        // }
+        option.source = { id: opt.source }
+        option.target = { id: opt.target }
+    }
+    option.state = opt.state
+    option.linkType = opt.linkType
+    option.arrowType = opt.arrowType
+    /*连接线颜色*/
+    switch (option.state) {
+        case 0:
+            option.attrs['.connection'].stroke = '#C6C9CA';
+            option.attrs['.marker-target'].fill = '#C6C9CA';
+            option.attrs['.marker-target'].stroke = '#C6C9CA';
+            break;
+        case 1:
+            option.attrs['.connection'].stroke = '#D10002';
+            option.attrs['.marker-target'].fill = '#fff';
+            option.attrs['.marker-target'].stroke = '#D10002';
+            break;
+        case 2:
+            option.attrs['.connection'].stroke = '#FF9901'
+            option.attrs['.marker-target'].fill = '#FF9901';
+            option.attrs['.marker-target'].stroke = '#FF9901';
+            break;
+        case 3:
+            option.attrs['.connection'].stroke = '#DFB202'
+            option.attrs['.marker-target'].fill = '#DFB202';
+            option.attrs['.marker-target'].stroke = '#DFB202';
+            break;
+        case 4:
+            option.attrs['.connection'].stroke = '#00BFFF'
+            option.attrs['.marker-target'].fill = '#00BFFF';
+            option.attrs['.marker-target'].stroke = '#00BFFF';
+            break;
+        default:
+            option.attrs['.connection'].stroke = '#C6C9CA';
+            option.attrs['.marker-target'].fill = '#C6C9CA';
+            option.attrs['.marker-target'].stroke = '#C6C9CA';
+            break;
     }
     return option
 }
@@ -299,7 +206,6 @@ let getNewString = (str: any) => {
 }
 let vimOption = (opt: IvimOption) => {
     let option: any = {
-        position: {},
         size: {},
         attrs: {
             '.label': {}, '.type': {}, '.alarm': {}, '.perf': {}, '.logo': {}, '.body': {}
@@ -307,15 +213,13 @@ let vimOption = (opt: IvimOption) => {
     }
     let dataTooltip = ''
     let align = ''
-    let dataIcon = ''
-    let logoX = ''
     if (opt) {
         if (opt.id) {
             option.id = opt.id
         }
-        if (opt.x && opt.y) {
-            option.position = { x: opt.x, y: opt.y }
-        }
+        // if (opt.x && opt.y) {
+        //     option.position = { x: opt.x, y: opt.y }
+        // }
         /*当前图标高亮*/
         if (opt.id === opt.nodeId) {
             option.attrs['.body'].fill = '#e8ad38'
@@ -340,85 +244,14 @@ let vimOption = (opt: IvimOption) => {
                     break;
             }
         }
-        /*元素位置*/
-        if (opt.align) {
-            align = `name="${opt.align}"`
-            switch (opt.align) {
-                case 'left':
-                    option.attrs['.logo'].x = 0
-                    option.attrs['.perf'].x = 169
-                    option.attrs['.alarm'].x = 169
-                    option.attrs['.label']['ref-x'] = .58
-                    logoX = `x='1'`
-                    break;
-                case 'right':
-                    option.attrs['.logo'].x = 150
-                    option.attrs['.perf'].x = 1
-                    option.attrs['.alarm'].x = 1
-                    option.attrs['.label']['ref-x'] = .41
-                    logoX = `x='151'`
-                    break;
-                default:
-                    option.attrs['.logo'].x = 0
-                    break;
-            }
-        }
         /*元件的SVG*/
         if (opt.name) {
             dataTooltip = `data-tooltip="${opt.name}"`
             option.markup = `<g class="rotatable" ${dataTooltip} ${align}>
-            <rect class="body"/><rect class="logo" />
-            <image ${dataIcon} ${logoX} y="1" height="28px" width="28px"/><rect class="card"/>
-            <rect class="alarm"/><rect class="perf"/><text class="label"/><text class="type"/></g>`
+            <rect class="body"/><text class="label"/><text class="type"/></g>`
         }
         if (opt.name) {
             option.attrs['.label'].text = getNewString(opt.name)
-        }
-        if (opt.perf) {
-            switch (opt.perf) {
-                case 0:
-                    option.attrs['.perf'].width = 10
-                    option.attrs['.perf'].height = 10
-                    option.attrs['.perf'].fill = '#00b388'
-                    break;
-                case 1:
-                    option.attrs['.perf'].width = 10
-                    option.attrs['.perf'].height = 10
-                    option.attrs['.perf'].fill = '#FF9901'
-                    break;
-                default:
-                    break;
-            }
-        }
-        /*元件的告警*/
-        switch (opt.alarm) {
-            case 0:
-                option.attrs['.alarm'].width = 10
-                option.attrs['.alarm'].height = 10
-                option.attrs['.alarm'].fill = '#00b388'
-                break;
-            case 1:
-                option.attrs['.alarm'].width = 10
-                option.attrs['.alarm'].height = 10
-                option.attrs['.alarm'].fill = '#D10002'
-                break;
-            case 2:
-                option.attrs['.alarm'].width = 10
-                option.attrs['.alarm'].height = 10
-                option.attrs['.alarm'].fill = '#FF9901'
-                break;
-            case 3:
-                option.attrs['.alarm'].width = 10
-                option.attrs['.alarm'].height = 10
-                option.attrs['.alarm'].fill = '#DFB202'
-                break;
-            case 4:
-                option.attrs['.alarm'].width = 10
-                option.attrs['.alarm'].height = 10
-                option.attrs['.alarm'].fill = '#00BFFF'
-                break;
-            default:
-                break;
         }
         /*元件的背景是亮还是暗*/
         switch (opt.status) {

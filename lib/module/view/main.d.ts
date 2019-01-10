@@ -38,7 +38,7 @@ export default class Main extends React.Component<MainProps, any> {
      * 数据解析
      * @param data 拓扑数据
      */
-    parseData(data: any, nodeId: any): void;
+    parseData(data: any): void;
     initializePaper(): void;
     small_map(): void;
     fullScreen: () => void;
@@ -47,7 +47,6 @@ export default class Main extends React.Component<MainProps, any> {
     watchFullScreen: () => void;
     renderLayout(): void;
     renderLinks(): void;
-    renderLinks_2(): void;
     zoomIn(): void;
     zoomOut(): void;
     constructor(props: MainProps);
