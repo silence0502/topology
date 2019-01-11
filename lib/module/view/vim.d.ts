@@ -6,15 +6,15 @@ export interface IlinkOption {
     target?: any;
     sourceObj?: any;
     targetObj?: any;
-    linkType?: number;
-    arrowType?: number;
 }
 declare let linkOption: (opt: IlinkOption) => any;
 export interface IvimOption {
     id?: string;
     name?: string;
     status?: string;
+    state?: string;
     type?: string;
+    desc?: string;
     alarm?: number;
     align?: string;
     perf?: number;

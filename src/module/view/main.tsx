@@ -40,7 +40,7 @@ export default class Main extends React.Component<MainProps, any> {
     paperScroller: joint.ui.PaperScroller;
     navigator: joint.ui.Navigator;
     static defaultProps: MainProps = {
-        animate: false,
+        animate: true,
         width: 800,
         height: window.innerHeight,
         paper_width: 1000,
@@ -61,7 +61,7 @@ export default class Main extends React.Component<MainProps, any> {
         let paper = this.paper
         graph.on('signal', function (cell: any, data: any) {
             if (cell instanceof joint.dia.Link) {
-                if (cell.attributes.linkType === 1) {
+                if (cell.attributes.state === 'ACTIVE') {
                     let targetCell = graph.getCell(cell.get('target').id);
                     let s: any = paper.findViewByModel(cell)
                     s.sendToken(V('circle', { r: 7, fill: 'green' }).node, 1000, function () {
@@ -106,6 +106,11 @@ export default class Main extends React.Component<MainProps, any> {
                 new VIM(vimOption(_.merge(node, opt))).addTo(this.graph)
             })
         }
+        if (this.props.data.links) {
+            _.map(this.props.data.links, (link) => {
+                new Link(linkOption(link)).addTo(this.graph)
+            })
+        }
     }
     /*
     * 初始化画布
@@ -121,7 +126,7 @@ export default class Main extends React.Component<MainProps, any> {
             model: graph,
             perpendicularLinks: true,
             restrictTranslate: true,
-            // interactive: false, /*是否可以拖动*/
+            interactive: false, /*是否可以拖动*/
         });
         this.parseData(this.props.data)
         if (this.props.animate) {
@@ -135,7 +140,7 @@ export default class Main extends React.Component<MainProps, any> {
         paper.on('blank:pointerdown', paperScroller.startPanning);
         $(this.paperContainer).append(paperScroller.el);
         this.renderLayout()
-        this.renderLinks()
+        // this.renderLinks()
         paperScroller.render();
         // if (this.props.center) { paperScroller.center() }
         if (this.props.nodeId) {
@@ -153,26 +158,22 @@ export default class Main extends React.Component<MainProps, any> {
         /*
          * tooltip初始化
          */
-        // let tool_tip = new joint.ui.Tooltip({
-        //     target: '[data-tooltip]',
-        //     position: (target: any) => {
-        //         let align = _.split(target.attributes['name'].nodeValue, '|')
-        //         return align[0] === 'left' ? 'left' : 'right'
-        //     },
-        //     content: (target: any) => {
-        //         let tips = _.split(target.attributes['data-tooltip'].nodeValue, '|')
-        //         return _.map(tips, (item, index) => {
-        //             if (index === 0 && tips.length > 1) {
-        //                 if (tips[0] !== tips[1]) {
-        //                     return `<b>${item}</b><hr />`
-        //                 } else {
-        //                     return ''
-        //                 }
-        //             }
-        //             return item
-        //         })
-        //     }
-        // });
+        let tool_tip = new joint.ui.Tooltip({
+            target: '[data-tooltip]',
+            content: (target: any) => {
+                let tips = _.split(target.attributes['data-tooltip'].nodeValue, '|')
+                return _.map(tips, (item, index) => {
+                    if (index === 0 && tips.length > 1) {
+                        if (tips[0] !== tips[1]) {
+                            return `<b>${item}</b><hr />`
+                        } else {
+                            return ''
+                        }
+                    }
+                    return item
+                })
+            }
+        });
         /*
          * 双击事件
          */
@@ -341,8 +342,7 @@ export default class Main extends React.Component<MainProps, any> {
      * 自动布局 
      */
     renderLayout() {
-        console.log('object');
-        var graphBBox = new joint.layout.DirectedGraph.layout(this.graph, {
+        var graphBBox = joint.layout.DirectedGraph.layout(this.graph, {
             nodeSep: 50,
             edgeSep: 80,
             marginX: 100,
