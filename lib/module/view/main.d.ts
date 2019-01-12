@@ -23,6 +23,7 @@ export default class Main extends React.Component<MainProps, any> {
     btn_zoomout: HTMLDivElement;
     navi: HTMLDivElement;
     btn_fullscreen: HTMLDivElement;
+    btn_saveimg: HTMLDivElement;
     graph: joint.dia.Graph;
     graph2: joint.dia.Graph;
     commandManager: joint.dia.CommandManager;
@@ -41,6 +42,10 @@ export default class Main extends React.Component<MainProps, any> {
     parseData(data: any): void;
     initializePaper(): void;
     small_map(): void;
+    download(filename: string, imgData: any): void;
+    downloadFile(fileName: any, content: any): void;
+    base64ToBlob(code: any): Blob;
+    saveImg(): void;
     fullScreen: () => void;
     requestFullScreen: () => void;
     exitFullscreen: () => void;

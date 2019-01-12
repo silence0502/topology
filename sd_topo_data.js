@@ -29,6 +29,12 @@ var topoData = {
         "desc": "Represents a 24 subnet",
         "state": "ACTIVE",
         "displayType": "rfs",
+    }, {
+        "id": "CMZJ::CPE-000.00",
+        "name": "CPE",
+        "desc": "Represents a 24 subnet",
+        "state": "ACTIVE",
+        "displayType": "rfs",
     }],
     "links": [{
         "source": "CMZJ::E2CVPN-000.01",
@@ -42,5 +48,8 @@ var topoData = {
     }, {
         "source": "CMZJ::SubNet16-000.00",
         "target": "CMZJ::SubNet24-000.00",
+    }, {
+        "source": "CMZJ::SubNet24-000.00",
+        "target": "CMZJ::CPE-000.00",
     }]
 }

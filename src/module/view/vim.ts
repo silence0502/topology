@@ -95,8 +95,26 @@ let linkOption = (opt: IlinkOption) => {
         }
     }
     if (opt) {
-        option.source = { id: opt.source }
-        option.target = { id: opt.target }
+        option.source = {
+            id: opt.source,
+            anchor: {
+                name: 'bottomLeft',
+                args: {
+                    dx: 180,
+                    dy: 50
+                }
+            }
+        }
+        option.target = {
+            id: opt.target,
+            anchor: {
+                name: 'bottomLeft',
+                args: {
+                    dx: 0,
+                    dy: 50
+                }
+            }
+        }
     }
     option.state = opt.sourceObj.state
     /*连接线颜色*/

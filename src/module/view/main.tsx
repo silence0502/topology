@@ -31,6 +31,7 @@ export default class Main extends React.Component<MainProps, any> {
     btn_zoomout: HTMLDivElement
     navi: HTMLDivElement
     btn_fullscreen: HTMLDivElement
+    btn_saveimg: HTMLDivElement
 
     // rappid things
     graph: joint.dia.Graph;
@@ -79,8 +80,8 @@ export default class Main extends React.Component<MainProps, any> {
         let sources: any = []
         let targets: any = []
         _.map(graph.getLinks(), (link: any) => {
-            sources.push(link.get('source'))
-            targets.push(link.get('target'))
+            sources.push(link.get('source').id)
+            targets.push(link.get('target').id)
         })
         let triggers = _.sortedUniq(_.difference(sources, targets))
         function simulate() {
@@ -143,17 +144,18 @@ export default class Main extends React.Component<MainProps, any> {
         // this.renderLinks()
         paperScroller.render();
         // if (this.props.center) { paperScroller.center() }
-        if (this.props.nodeId) {
-            let positon: any = {}
-            _.map(this.props.data.nodes, (item, index) => {
-                if (item.id === this.props.nodeId) {
-                    positon = { x: item.x, y: item.y }
-                }
-            })
-            paperScroller.center(positon.x, positon.y)
-        } else if (this.props.center) {
-            paperScroller.center()
-        }
+        // if (this.props.nodeId) {
+        //     let positon: any = {}
+        //     _.map(this.props.data.nodes, (item, index) => {
+        //         if (item.id === this.props.nodeId) {
+        //             positon = { x: item.x, y: item.y }
+        //         }
+        //     })
+        //     paperScroller.center(positon.x, positon.y)
+        // } else if (this.props.center) {
+        //     paperScroller.center()
+        // }
+        // paperScroller.center()
         if (this.props.zoomToFit) { paperScroller.zoomToFit() }
         /*
          * tooltip初始化
@@ -175,54 +177,6 @@ export default class Main extends React.Component<MainProps, any> {
             }
         });
         /*
-         * 双击事件
-         */
-        paper.on('cell:pointerdblclick', (cellView: any) => {
-            if (cellView.model.attributes.type === 'VIM') {
-                if (this.props.onDblclick) {
-                    this.props.onDblclick(cellView)
-                }
-            }
-        });
-        /*
-         * 单击事件
-         */
-        paper.on('cell:pointerclick', (cellView: any, evt: any) => {
-            if (cellView.model.attributes.type === 'VIM') {
-                let multiple = paperScroller.zoom()
-                if (cellView.model.attributes.attrs['.perf'].width > 0) {
-                    if (cellView.model.attributes.attrs['.perf'].x === 1) {
-                        if (evt.offsetX / multiple - cellView.model.attributes.position.x <= 11) {
-                            if (evt.offsetY / multiple - cellView.model.attributes.position.y <= 11) {
-                                console.log('top');
-                            }
-                        }
-                    } else if (cellView.model.attributes.attrs['.perf'].x === 169) {
-                        if (evt.offsetX / multiple - cellView.model.attributes.position.x >= 169) {
-                            if (evt.offsetY / multiple - cellView.model.attributes.position.y <= 11) {
-                                console.log('top');
-                            }
-                        }
-                    }
-                }
-                if (cellView.model.attributes.attrs['.alarm'].width > 0) {
-                    if (cellView.model.attributes.attrs['.alarm'].x === 1) {
-                        if (evt.offsetX / multiple - cellView.model.attributes.position.x <= 11) {
-                            if (evt.offsetY / multiple - cellView.model.attributes.position.y >= 19) {
-                                console.log('bottom');
-                            }
-                        }
-                    } else if (cellView.model.attributes.attrs['.alarm'].x === 169) {
-                        if (evt.offsetX / multiple - cellView.model.attributes.position.x >= 169) {
-                            if (evt.offsetY / multiple - cellView.model.attributes.position.y >= 19) {
-                                console.log('bottom');
-                            }
-                        }
-                    }
-                }
-            }
-        });
-        /*
          * 解决全屏不显示tooltip
          */
         paper.on('cell:mouseover', (cellView: any) => {
@@ -241,6 +195,7 @@ export default class Main extends React.Component<MainProps, any> {
         this.btn_zoomin.onclick = this.zoomIn.bind(this)
         this.btn_zoomout.onclick = this.zoomOut.bind(this)
         this.btn_fullscreen.onclick = this.fullScreen.bind(this)
+        this.btn_saveimg.onclick = this.saveImg.bind(this)
         /*
          * 缩略图
          */
@@ -266,6 +221,50 @@ export default class Main extends React.Component<MainProps, any> {
                 visable_instance: true
             })
         }
+    }
+    //下载图片
+    download(filename: string, imgData: any) {
+        this.downloadFile(filename, imgData)
+    }
+    //下载
+    downloadFile(fileName: any, content: any) {
+        let aLink = document.createElement('a');
+        let blob = this.base64ToBlob(content); //new Blob([content]);
+
+        let evt = document.createEvent("HTMLEvents");
+        evt.initEvent("click", true, true); //initEvent 不加后两个参数在FF下会报错  事件类型，是否冒泡，是否阻止浏览器的默认行为
+        aLink.download = fileName;
+        aLink.href = URL.createObjectURL(blob);
+    }
+    //base64转blob
+    base64ToBlob(code: any) {
+        let parts = code.split(';base64,');
+        let contentType = parts[0].split(':')[1];
+        let raw = window.atob(parts[1]);
+        let rawLength = raw.length;
+
+        let uInt8Array = new Uint8Array(rawLength);
+
+        for (let i = 0; i < rawLength; ++i) {
+            uInt8Array[i] = raw.charCodeAt(i);
+        }
+        return new Blob([uInt8Array], {
+            type: contentType
+        });
+    }
+    saveImg() {
+        let paper = this.paper;
+        let self = this
+        paper.toPNG(function (dataURL: any) {
+            new joint.ui.Lightbox({
+                image: dataURL,
+                downloadable: true,
+            }).open();
+            // self.download('topo.png', dataURL)
+        }, {
+                padding: 10,
+            }
+        );
     }
     /*
      * 打开关闭全屏
@@ -342,14 +341,21 @@ export default class Main extends React.Component<MainProps, any> {
      * 自动布局 
      */
     renderLayout() {
-        var graphBBox = joint.layout.DirectedGraph.layout(this.graph, {
-            nodeSep: 50,
-            edgeSep: 80,
-            marginX: 100,
-            marginY: 100,
-            rankSep: 80,
-            rankDir: 'LR'
+        // var graphBBox = joint.layout.DirectedGraph.layout(this.graph, {
+        //     nodeSep: 50,
+        //     edgeSep: 80,
+        //     marginX: 100,
+        //     marginY: 100,
+        //     rankSep: 80,
+        //     rankDir: 'LR'
+        // });
+        var graphLayout = new joint.layout.TreeLayout({
+            graph: this.graph,
+            parentGap: 80,
+            siblingGap: 100
         });
+        var root = this.graph.getElements()[0].position(200, 200);
+        graphLayout.layout();
     }
     /*
      * 布局后的连线
@@ -412,6 +418,7 @@ export default class Main extends React.Component<MainProps, any> {
                     <div className="topology-app" >
                         <div className="app-body">
                             {this.renderFullscreenBtn()}
+                            <div ref={(node: HTMLDivElement) => { this.btn_saveimg = node }} id="btn_saveimg" className="btn">导出图片</div>
                             <div ref={(node: HTMLDivElement) => { this.btn_map = node }} id="btn-map" className="btn">{onMap}</div>
                             <div ref={(node: HTMLDivElement) => { this.btn_zoomin = node }} id="btn-zoomin" className="btn">+</div>
                             <div ref={(node: HTMLDivElement) => { this.btn_zoomout = node }} id="btn-zoomout" className="btn">-</div>
