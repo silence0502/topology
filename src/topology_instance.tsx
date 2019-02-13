@@ -7,12 +7,9 @@ import TopologyInstance from './module/view/main';
 const init = (mountNodeId = 'root', opt: any) => {
   ReactDOM.render(
     <TopologyInstance
-      rankDir={opt.rankDir}
       animate={opt.animate}
       cid={opt.cid}
       data={opt.data}
-      nodeId={opt.nodeId}
-      onDblclick={opt.onDblclick}
       width={opt.width}
       height={opt.height}
     />, document.getElementById(mountNodeId));

@@ -20,23 +20,16 @@ let VIM = joint.shapes.basic.Generic.extend({
                 'ref-y': .1,
                 'font-size': 14,
                 'text-anchor': 'start',
-                fill: '#000'
-            },
-            '.type': {
-                text: '',
-                'ref-x': .05,
-                'ref-y': .7,
-                'font-size': 14,
-                'text-anchor': 'left',
-                fill: '#000'
+                fill: '#fff'
             },
             '.body': {
                 'ref-width': '100%',
                 'ref-height': '100%',
                 'rx': '2px',
                 'ry': '2px',
-                stroke: '#00B388',
-                'stroke-width': 2
+                stroke: '#fff',
+                'stroke-width': 2,
+                fill: '#fff'
             }
         }
     }, joint.shapes.basic.Generic.prototype.defaults),
@@ -98,7 +91,7 @@ let linkOption = (opt: IlinkOption) => {
         option.source = {
             id: opt.source,
             anchor: {
-                name: 'bottomLeft',
+                name: 'right',
                 args: {
                     dx: 180,
                     dy: 50
@@ -108,7 +101,7 @@ let linkOption = (opt: IlinkOption) => {
         option.target = {
             id: opt.target,
             anchor: {
-                name: 'bottomLeft',
+                name: 'left',
                 args: {
                     dx: 0,
                     dy: 50
@@ -141,17 +134,10 @@ let linkOption = (opt: IlinkOption) => {
 export interface IvimOption {
     id?: string
     name?: string
-    status?: string
     state?: string
     type?: string
     desc?: string
-    alarm?: number
-    align?: string
-    perf?: number
-    x?: number
-    y?: number
     displayType?: any
-    nodeId?: string
 }
 /*元件显示文字的长短*/
 let getNewString = (str: any) => {
@@ -173,7 +159,7 @@ let vimOption = (opt: IvimOption) => {
     let option: any = {
         size: {},
         attrs: {
-            '.label': {}, '.type': {}, '.alarm': {}, '.perf': {}, '.logo': {}, '.body': {}
+            '.label': {}, '.body': {}
         }
     }
     let dataTooltip = ''
@@ -181,19 +167,11 @@ let vimOption = (opt: IvimOption) => {
         if (opt.id) {
             option.id = opt.id
         }
-        switch (opt.state) {
-            case 'ACTIVE':
-                option.attrs['.body']['stroke-width'] = '2'
-                break;
-            default:
-                option.attrs['.body']['stroke-dasharray'] = '5 3'
-                break;
-        }
         /*元件的SVG*/
         if (opt.name) {
             dataTooltip = `data-tooltip="${opt.name}"`
             option.markup = `<g class="rotatable" ${dataTooltip}>
-            <rect class="body"/><text class="label"/><text class="type"/></g>`
+            <rect class="body"/><text class="label"/></g>`
         }
         if (opt.name) {
             option.attrs['.label'].text = '名称:' + getNewString(opt.name) + '\n' + '描述:' + getNewString(opt.desc)
@@ -201,12 +179,20 @@ let vimOption = (opt: IvimOption) => {
         /*元件的背景是亮还是暗*/
         switch (opt.state) {
             case 'ACTIVE':
-                option.attrs['.logo'].fill = '#00B388'
                 option.attrs['.body'].stroke = '#00B388'
+                option.attrs['.body'].fill = '#00B388'
                 break;
-            default:
-                option.attrs['.logo'].fill = '#84756b'
-                option.attrs['.body'].stroke = '#84756b'
+            case 'RESERVED':
+                option.attrs['.body'].stroke = '#c73420'
+                option.attrs['.body'].fill = '#c73420'
+                break;
+            case 'DESIGNED':
+                option.attrs['.body'].stroke = '#f8cd46'
+                option.attrs['.body'].fill = '#f8cd46'
+                break;
+            case 'PROVISIONED':
+                option.attrs['.body'].stroke = '#53bdf9'
+                option.attrs['.body'].fill = '#53bdf9'
                 break;
         }
     }

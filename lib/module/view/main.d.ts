@@ -4,16 +4,13 @@ export interface MainProps {
     width?: any;
     height?: any;
     drawGrid?: boolean;
-    rankDir?: 'TB' | 'BT' | 'LR' | 'RL';
-    onDblclick?: Function;
+    onClick?: Function;
     data: any;
-    nodeId?: string;
     center?: boolean;
     zoomToFit?: boolean;
     paper_width?: number;
     paper_height?: number;
     cid?: string;
-    fullscreen_btn_disable?: boolean;
 }
 export default class Main extends React.Component<MainProps, any> {
     paperContainer: HTMLDivElement;
@@ -41,6 +38,7 @@ export default class Main extends React.Component<MainProps, any> {
      */
     parseData(data: any): void;
     initializePaper(): void;
+    renderNavigator(): void;
     small_map(): void;
     download(filename: string, imgData: any): void;
     downloadFile(fileName: any, content: any): void;

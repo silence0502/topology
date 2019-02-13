@@ -27,13 +27,13 @@ var topoData = {
         "id": "CMZJ::SubNet24-000.00",
         "name": "SubNet24",
         "desc": "Represents a 24 subnet",
-        "state": "ACTIVE",
+        "state": "DESIGNED",
         "displayType": "rfs",
     }, {
         "id": "CMZJ::CPE-000.00",
         "name": "CPE",
         "desc": "Represents a 24 subnet",
-        "state": "ACTIVE",
+        "state": "RESERVED",
         "displayType": "rfs",
     }],
     "links": [{

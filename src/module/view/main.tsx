@@ -10,16 +10,13 @@ export interface MainProps {
     width?: any
     height?: any
     drawGrid?: boolean
-    rankDir?: 'TB' | 'BT' | 'LR' | 'RL';
-    onDblclick?: Function
+    onClick?: Function
     data: any
-    nodeId?: string
     center?: boolean
     zoomToFit?: boolean
     paper_width?: number
     paper_height?: number
     cid?: string
-    fullscreen_btn_disable?: boolean
 }
 
 export default class Main extends React.Component<MainProps, any> {
@@ -47,12 +44,9 @@ export default class Main extends React.Component<MainProps, any> {
         paper_width: 1000,
         paper_height: 1000,
         drawGrid: false,
-        rankDir: 'RL',
         data: {},
-        nodeId: '',
         center: false,
         zoomToFit: false,
-        fullscreen_btn_disable: false
     }
     /**
      * 数据传递动画
@@ -141,22 +135,9 @@ export default class Main extends React.Component<MainProps, any> {
         paper.on('blank:pointerdown', paperScroller.startPanning);
         $(this.paperContainer).append(paperScroller.el);
         this.renderLayout()
-        // this.renderLinks()
         paperScroller.render();
-        // if (this.props.center) { paperScroller.center() }
-        // if (this.props.nodeId) {
-        //     let positon: any = {}
-        //     _.map(this.props.data.nodes, (item, index) => {
-        //         if (item.id === this.props.nodeId) {
-        //             positon = { x: item.x, y: item.y }
-        //         }
-        //     })
-        //     paperScroller.center(positon.x, positon.y)
-        // } else if (this.props.center) {
-        //     paperScroller.center()
-        // }
-        // paperScroller.center()
         if (this.props.zoomToFit) { paperScroller.zoomToFit() }
+        paperScroller.zoomToFit()
         /*
          * tooltip初始化
          */
@@ -182,9 +163,9 @@ export default class Main extends React.Component<MainProps, any> {
         paper.on('cell:mouseover', (cellView: any) => {
             if (cellView.model.attributes.type === 'VIM') {
                 if (this.state.isFullScreen === true) {
-                    let topology_instance: any = document.getElementById('topology_instance')
+                    let topology_open: any = document.getElementById('topology_open')
                     let joint_tooltips = document.getElementsByClassName('joint-tooltip')[0]
-                    topology_instance.append(joint_tooltips)
+                    topology_open.append(joint_tooltips)
                 }
             }
         });
@@ -199,6 +180,15 @@ export default class Main extends React.Component<MainProps, any> {
         /*
          * 缩略图
          */
+        // this.renderNavigator();
+
+        paper.on('cell:pointerclick', (cellView: any, evt: any) => {
+            if (cellView.model.attributes.type === 'VIM') {
+                console.log(cellView);
+            }
+        });
+    }
+    renderNavigator() {
         let navigator = this.navigator = new joint.ui.Navigator({
             width: 240,
             height: 115,
@@ -206,7 +196,7 @@ export default class Main extends React.Component<MainProps, any> {
             zoom: false,
         });
         $(this.navi).append(navigator.el);
-        navigator.render();
+        navigator.render()
     }
     /*
      * 打开关闭缩略图
@@ -266,6 +256,7 @@ export default class Main extends React.Component<MainProps, any> {
             }
         );
     }
+
     /*
      * 打开关闭全屏
      */
@@ -280,7 +271,7 @@ export default class Main extends React.Component<MainProps, any> {
      * 进入全屏
      */
     requestFullScreen = () => {
-        var de: any = document.getElementById('topology_instance');
+        var de: any = document.getElementById('topology_open');
         if (de.requestFullscreen) {
             de.requestFullscreen();
         } else if (de.mozRequestFullScreen) {
@@ -355,7 +346,7 @@ export default class Main extends React.Component<MainProps, any> {
             siblingGap: 100
         });
         var root = this.graph.getElements()[0].position(200, 200);
-        graphLayout.layout();
+        graphLayout.layout({ myFlag: true });
     }
     /*
      * 布局后的连线
@@ -379,7 +370,7 @@ export default class Main extends React.Component<MainProps, any> {
     constructor(props: MainProps) {
         super(props);
         this.state = {
-            visable_instance: false,
+            visable_instance: true,
             isFullScreen: false,
         }
     }
@@ -388,6 +379,7 @@ export default class Main extends React.Component<MainProps, any> {
     }
     componentDidMount() {
         this.initializePaper()
+        this.renderNavigator();
         this.watchFullScreen()
     }
     renderMap() {
@@ -399,23 +391,17 @@ export default class Main extends React.Component<MainProps, any> {
         }
     }
     renderFullscreenBtn() {
-        let { fullscreen_btn_disable } = this.props
-        if (fullscreen_btn_disable === true) {
-            return <div ref={(node: HTMLDivElement) => { this.btn_fullscreen = node }} id="btn-fullscreen" className="btn" style={{ display: 'none' }}>全屏</div>
-        } else {
-            return <div ref={(node: HTMLDivElement) => { this.btn_fullscreen = node }} id="btn-fullscreen" className="btn">全屏</div>
-        }
+        return <div ref={(node: HTMLDivElement) => { this.btn_fullscreen = node }} id="btn-fullscreen" className="btn">全屏</div>
     }
     render() {
         let onMap = this.state.visable_instance === true ? '关闭缩略图' : '打开缩略图'
         return (
             <div>
-                <div className="topology_instance" id="topology_instance"
-                    style={{
+                <div className="topology_open" id="topology_open">
+                    <div className="topology-app" style={{
                         width: window.innerWidth,
                         height: window.innerHeight
                     }}>
-                    <div className="topology-app" >
                         <div className="app-body">
                             {this.renderFullscreenBtn()}
                             <div ref={(node: HTMLDivElement) => { this.btn_saveimg = node }} id="btn_saveimg" className="btn">导出图片</div>
