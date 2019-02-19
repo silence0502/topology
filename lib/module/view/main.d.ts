@@ -22,7 +22,6 @@ export default class Main extends React.Component<MainProps, any> {
     btn_map: HTMLDivElement;
     btn_zoomout: HTMLDivElement;
     navi: HTMLDivElement;
-    btn_fullscreen: HTMLDivElement;
     graph: joint.dia.Graph;
     graph2: joint.dia.Graph;
     commandManager: joint.dia.CommandManager;
@@ -41,10 +40,6 @@ export default class Main extends React.Component<MainProps, any> {
     parseData(data: any, nodeId: any): void;
     initializePaper(): void;
     small_map(): void;
-    fullScreen: () => void;
-    requestFullScreen: () => void;
-    exitFullscreen: () => void;
-    watchFullScreen: () => void;
     renderLayout(): void;
     renderLinks(): void;
     renderLinks_2(): void;
@@ -54,6 +49,5 @@ export default class Main extends React.Component<MainProps, any> {
     componentWillMount(): void;
     componentDidMount(): void;
     renderMap(): JSX.Element;
-    renderFullscreenBtn(): JSX.Element;
     render(): JSX.Element;
 }

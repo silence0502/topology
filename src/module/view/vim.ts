@@ -125,24 +125,32 @@ let linkOption = (opt: IlinkOption) => {
     }
     if (opt) {
         if (opt.linkType === 1) {
-            option.source = {
-                x: opt.sourceObj.x + 90,
-                y: opt.sourceObj.y + 30,
-            }
-            if (opt.targetObj.align === 'left') {
-                option.target = {
-                    x: opt.targetObj.x,
-                    y: opt.targetObj.y + 20,
-                }
+            if (opt.targetObj.hide) {
+                option.source = { id: opt.source }
+                option.target = { id: opt.target }
+                option.attrs['.connection']['display'] = 'none';
+                option.attrs['.marker-target']['display'] = 'none';
             } else {
-                option.target = {
-                    x: opt.targetObj.x + 180,
-                    y: opt.targetObj.y + 20,
+                option.source = {
+                    x: opt.sourceObj.x + 90,
+                    y: opt.sourceObj.y + 30,
                 }
+                if (opt.targetObj.align === 'left') {
+                    option.target = {
+                        x: opt.targetObj.x,
+                        y: opt.targetObj.y + 20,
+                    }
+                } else {
+                    option.target = {
+                        x: opt.targetObj.x + 180,
+                        y: opt.targetObj.y + 20,
+                    }
+                }
+                // option.source = { id: opt.source }
+                // option.target = { id: opt.target }
             }
-            // option.source = { id: opt.source }
-            // option.target = { id: opt.target }
-        } else if (opt.linkType === 0) {
+        }
+        else if (opt.linkType === 0) {
             if (opt.sourceObj.align === 'left') {
                 option.source = {
                     x: opt.sourceObj.x + 180,
@@ -280,6 +288,7 @@ export interface IvimOption {
     y?: number
     displayType?: any
     nodeId?: string
+    hide?: boolean
 }
 /*元件显示文字的长短*/
 let getNewString = (str: any) => {
@@ -366,10 +375,17 @@ let vimOption = (opt: IvimOption) => {
         /*元件的SVG*/
         if (opt.name) {
             dataTooltip = `data-tooltip="${opt.name}"`
-            option.markup = `<g class="rotatable" ${dataTooltip} ${align}>
-            <rect class="body"/><rect class="logo" />
-            <image ${dataIcon} ${logoX} y="1" height="28px" width="28px"/><rect class="card"/>
-            <rect class="alarm"/><rect class="perf"/><text class="label"/><text class="type"/></g>`
+            if (opt.hide) {
+                option.markup = `<g class="rotatable" style="display:  none" ${dataTooltip} ${align}>
+                <rect class="body"/><rect class="logo" />
+                <image ${dataIcon} ${logoX} y="1" height="28px" width="28px"/><rect class="card"/>
+                <rect class="alarm"/><rect class="perf"/><text class="label"/><text class="type"/></g>`
+            } else {
+                option.markup = `<g class="rotatable" ${dataTooltip} ${align}>
+                <rect class="body"/><rect class="logo" />
+                <image ${dataIcon} ${logoX} y="1" height="28px" width="28px"/><rect class="card"/>
+                <rect class="alarm"/><rect class="perf"/><text class="label"/><text class="type"/></g>`
+            }
         }
         if (opt.name) {
             option.attrs['.label'].text = getNewString(opt.name)

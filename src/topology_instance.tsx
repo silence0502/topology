@@ -13,6 +13,7 @@ const init = (mountNodeId = 'root', opt: any) => {
       data={opt.data}
       nodeId={opt.nodeId}
       onDblclick={opt.onDblclick}
+      onContextmenuclick={opt.onContextmenuclick}
       width={opt.width}
       height={opt.height}
     />, document.getElementById(mountNodeId));

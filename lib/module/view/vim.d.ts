@@ -22,6 +22,7 @@ export interface IvimOption {
     y?: number;
     displayType?: any;
     nodeId?: string;
+    hide?: boolean;
 }
 declare let vimOption: (opt: IvimOption) => any;
 export { VIM, vimOption, Link, linkOption };

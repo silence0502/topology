@@ -35,12 +35,25 @@ function calcNodePos(trees, node, xpos, ypos, xscale, yscale) {
 	if (xscale < 0) {
 		node.align = 'right';
 	}
-	node.x = xpos + xscale;
-	node.y = ypos + yscale;
-	for (var i = 0; i < node.child.length; ++i) {
-		node.height += calcNodePos(trees, trees.get(node.child[i].id), node.x, node.y + node.height, xscale, yscale);
+	if (node.hide) {
+		node.x = xpos;
+		node.y = ypos;
+	} else {
+		node.x = xpos + xscale;
+		node.y = ypos + yscale;
 	}
-	return node.height + yscale;
+	for (var i = 0; i < node.child.length; ++i) {
+		if (node.child[i].hide) {
+			node.height += calcNodePos(trees, trees.get(node.child[i].id), node.x, node.y, xscale, yscale);
+		} else {
+			node.height += calcNodePos(trees, trees.get(node.child[i].id), node.x, node.y + node.height, xscale, yscale);
+		}
+	}
+	if (node.hide) {
+		return node.height;
+	} else {
+		return node.height + yscale;
+	}
 }
 
 function getMaxFloor(treeData) {

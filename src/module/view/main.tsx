@@ -30,7 +30,6 @@ export default class Main extends React.Component<MainProps, any> {
     btn_map: HTMLDivElement
     btn_zoomout: HTMLDivElement
     navi: HTMLDivElement
-    btn_fullscreen: HTMLDivElement
 
     // rappid things
     graph: joint.dia.Graph;
@@ -146,11 +145,9 @@ export default class Main extends React.Component<MainProps, any> {
                     positon = { x: item.x, y: item.y }
                 }
             })
-            paperScroller.center(positon.x, positon.y)
-        } else if (this.props.center) {
-            paperScroller.center()
         }
-        if (this.props.zoomToFit) { paperScroller.zoomToFit() }
+        paperScroller.zoomToFit()
+        // if (this.props.zoomToFit) { paperScroller.zoomToFit() }
         /*
          * tooltip初始化
          */
@@ -240,7 +237,6 @@ export default class Main extends React.Component<MainProps, any> {
         this.btn_map.onclick = this.small_map.bind(this)
         this.btn_zoomin.onclick = this.zoomIn.bind(this)
         this.btn_zoomout.onclick = this.zoomOut.bind(this)
-        this.btn_fullscreen.onclick = this.fullScreen.bind(this)
         /*
          * 缩略图
          */
@@ -266,77 +262,6 @@ export default class Main extends React.Component<MainProps, any> {
                 visable_instance: true
             })
         }
-    }
-    /*
-     * 打开关闭全屏
-     */
-    fullScreen = () => {
-        if (!this.state.isFullScreen) {
-            this.requestFullScreen();
-        } else {
-            this.exitFullscreen();
-        }
-    }
-    /*
-     * 进入全屏
-     */
-    requestFullScreen = () => {
-        var de: any = document.getElementById('topology_instance');
-        if (de.requestFullscreen) {
-            de.requestFullscreen();
-        } else if (de.mozRequestFullScreen) {
-            de.mozRequestFullScreen();
-        } else if (de.webkitRequestFullScreen) {
-            de.webkitRequestFullScreen();
-        }
-    }
-
-    /*
-     * 退出全屏
-     */
-    exitFullscreen = () => {
-        var de: any = document;
-        if (de.exitFullscreen) {
-            de.exitFullscreen();
-        } else if (de.mozCancelFullScreen) {
-            de.mozCancelFullScreen();
-        } else if (de.webkitCancelFullScreen) {
-            de.webkitCancelFullScreen();
-        }
-    };
-    /*
-    * 监听fullscreenchange事件
-    */
-    watchFullScreen = () => {
-        const _self = this;
-        let de: any = document
-        document.addEventListener(
-            'fullscreenchange',
-            function () {
-                _self.setState({
-                    isFullScreen: de.fullscreen
-                });
-            },
-            false
-        )
-        document.addEventListener(
-            'mozfullscreenchange',
-            function () {
-                _self.setState({
-                    isFullScreen: de.mozFullScreen
-                });
-            },
-            false
-        )
-        document.addEventListener(
-            'webkitfullscreenchange',
-            function () {
-                _self.setState({
-                    isFullScreen: de.webkitIsFullScreen
-                });
-            },
-            false
-        );
     }
     /*
      * 自动布局 
@@ -389,7 +314,6 @@ export default class Main extends React.Component<MainProps, any> {
     }
     componentDidMount() {
         this.initializePaper()
-        this.watchFullScreen()
     }
     renderMap() {
         let { visable_instance } = this.state
@@ -397,14 +321,6 @@ export default class Main extends React.Component<MainProps, any> {
             return <div className="navigator_instance" id="navigator_instance" ref={(node: HTMLDivElement) => { this.navi = node }} />
         } else {
             return <div className="navigator_instance" id="navigator_instance" ref={(node: HTMLDivElement) => { this.navi = node }} style={{ display: 'none' }} />
-        }
-    }
-    renderFullscreenBtn() {
-        let { fullscreen_btn_disable } = this.props
-        if (fullscreen_btn_disable === true) {
-            return <div ref={(node: HTMLDivElement) => { this.btn_fullscreen = node }} id="btn-fullscreen" className="btn" style={{ display: 'none' }}>全屏</div>
-        } else {
-            return <div ref={(node: HTMLDivElement) => { this.btn_fullscreen = node }} id="btn-fullscreen" className="btn">全屏</div>
         }
     }
     render() {
@@ -418,7 +334,6 @@ export default class Main extends React.Component<MainProps, any> {
                     }}>
                     <div className="topology-app" >
                         <div className="app-body">
-                            {this.renderFullscreenBtn()}
                             <div ref={(node: HTMLDivElement) => { this.btn_map = node }} id="btn-map" className="btn">{onMap}</div>
                             <div ref={(node: HTMLDivElement) => { this.btn_zoomin = node }} id="btn-zoomin" className="btn">+</div>
                             <div ref={(node: HTMLDivElement) => { this.btn_zoomout = node }} id="btn-zoomout" className="btn">-</div>

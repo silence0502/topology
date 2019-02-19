@@ -7,21 +7,25 @@
         box-sizing: border-box;
         margin: 0;
         padding: 0;
+
         .app-body {
             position: relative;
             height: 100%;
+
             .fun-btn-area {
                 position: absolute;
                 top: 10px;
                 left: 50%;
                 z-index: 999;
                 margin-left: -157.5px;
+
                 .fun-item {
                     display: inline-block;
                     position: relative;
                     width: 55px;
                     height: 30px;
                     margin-right: 10px;
+
                     .fun-btn {
                         width: 55px;
                         height: 30px;
@@ -38,12 +42,14 @@
                         color: #fff;
                     }
                 }
+
                 .fun-item-more {
                     display: inline-block;
                     position: relative;
                     width: 55px;
                     height: 30px;
                     margin-right: 10px;
+
                     .fun-btn {
                         width: 55px;
                         height: 30px;
@@ -59,28 +65,33 @@
                         font-size: 16px;
                         color: #fff;
                     }
-                    /* 下拉菜单内容，设置为隐藏 */   
-                    .dropdown-content{   
-                        min-width:150px;   
-                        background-color:#F5F5F5;   
-                        position:absolute;   
-                        display:none;   
-                        box-shadow:0px 8px 15px 0px rgba(0,0,0,0.2);   
-                        a {   
-                            color:black;   
-                            text-decoration:none;   
-                            padding:12px 15px;   
-                            display:block;   
-                        }  
-                        a:hover{   
-                            background-color:#E8E8E8;   
-                        }    
+
+                    /* 下拉菜单内容，设置为隐藏 */
+                    .dropdown-content {
+                        min-width: 150px;
+                        background-color: #F5F5F5;
+                        position: absolute;
+                        display: none;
+                        box-shadow: 0px 8px 15px 0px rgba(0, 0, 0, 0.2);
+
+                        a {
+                            color: black;
+                            text-decoration: none;
+                            padding: 12px 15px;
+                            display: block;
+                        }
+
+                        a:hover {
+                            background-color: #E8E8E8;
+                        }
                     }
                 }
-                .fun-item-more:hover .dropdown-content{   
-                    display:block;   
-                }  
+
+                .fun-item-more:hover .dropdown-content {
+                    display: block;
+                }
             }
+
             .btn {
                 z-index: 999;
                 width: 30px;
@@ -103,47 +114,50 @@
                 background-color: #00b388;
                 border-color: #00b388;
             }
+
             #btn-changeLayout-tb {
                 top: 10px;
                 left: 30px;
             }
+
             #btn-changeLayout-bt {
                 top: 10px;
                 left: 70px;
             }
+
             #btn-changeLayout-lr {
                 top: 10px;
                 left: 110px;
             }
+
             #btn-changeLayout-rl {
                 top: 10px;
                 left: 150px;
             }
+
             #btn-zoomin {
                 top: 10px;
-                right: 130px;
+                right: 70px;
             }
+
             #btn-zoomout {
-                top: 10px;
-                right: 90px;
-            }
-            #btn-fullscreen {
-                width: 50px;
-                font-size: 16px;
                 top: 10px;
                 right: 30px;
             }
+
             #btn-map {
                 top: 10px;
-                right: 170px;
+                right: 110px;
                 width: 100px;
                 font-size: 16px;
             }
+
             #navigator_instance {
                 position: absolute;
                 top: 60px;
                 right: 30px;
             }
+
             .paper-container {
                 position: absolute;
                 top: 0;
